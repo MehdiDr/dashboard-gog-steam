@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Header, Icon } from 'semantic-ui-react';
 
-import Games from '../components/Games';
-import './Purchases.css';
+import GamesList from '../components/GamesList';
+import './styles/Purchases.css';
 
 const Purchases = () => {
   return (
@@ -11,7 +11,7 @@ const Purchases = () => {
       <Icon name='play' circular />
       <Header.Content>Liste de souhaits</Header.Content>
     </Header>
-    <Games />
+    <GamesList />
   </>
   )
 }

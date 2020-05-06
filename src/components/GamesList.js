@@ -1,52 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Table, Image } from 'semantic-ui-react';
-import * as moment from 'moment'; // UNINSTALL MAYBE
+import _ from 'lodash';
 
-const Games = () => {
-  const [gamesList, setGamesList] = useState([]);
+const Games = ({ gamesInfos }) => {
+  const [gamesInfosTest, setGamesInfos] = useState(gamesInfos);
+  const [column, setColumn] = useState(null);
+  const [direction, setDirection] = useState(null);
 
-  const fetchData = async () => {
-    const urls = [
-      "https://cors-anywhere.herokuapp.com/https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=0",
-      "https://cors-anywhere.herokuapp.com/https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=1"
-    ]
+  const handleSort = (clickedColumn) => () => {
+    if (column !== clickedColumn) {
+      setDirection('ascending');
+      setColumn(clickedColumn)
+      setGamesInfos(_.sortBy(gamesInfos, [clickedColumn]))
+      return
+    }
+      setGamesInfos(gamesInfosTest.reverse());
+      setDirection(direction === 'ascending' ? 'descending' : 'ascending');
+  }
 
-    await Promise.all(urls.map(url => fetch(url)
-      .then(res => res.json())
-      .then(res => setGamesList(res))
-      .catch(err => err)
-    ))
-  };
-
-  useEffect(() => fetchData(), [])
-
-  console.log(Object.values(gamesList))
+  console.log(gamesInfos)
 
   return (
-    <Table basic='very' columns="6">
+    <Table sortable fixed>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell></Table.HeaderCell>
-          <Table.HeaderCell>Nom</Table.HeaderCell>
-          <Table.HeaderCell>Date de sortie</Table.HeaderCell>
-          <Table.HeaderCell>Prix</Table.HeaderCell>
-          <Table.HeaderCell>Reduction</Table.HeaderCell>
-          <Table.HeaderCell>Évaluations</Table.HeaderCell>
+          <Table.HeaderCell sorted={column === 'name' ? direction : null} onClick={handleSort('name')}>
+            Nom
+          </Table.HeaderCell>
+          <Table.HeaderCell sorted={column === 'release_string' ? direction : null} onClick={handleSort('release_string')}>Date de sortie</Table.HeaderCell>
+          <Table.HeaderCell >Prix</Table.HeaderCell>
+          <Table.HeaderCell sorted={column === 'release_string' ? direction : null} onClick={handleSort('release_string')}>Reduction</Table.HeaderCell>
+          <Table.HeaderCell sorted={column === 'review_desc' ? direction : null} onClick={handleSort('review_desc')}>Évaluations</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
-      {gamesList && Object.values(gamesList).map((game, index) => {
-        return (
-        <Table.Row key={index}>
-          <Table.Cell collapsing width={2}><Image avatar bordered circular  size="small" src={game.capsule} /></Table.Cell>
-          <Table.Cell width={4}>{game.name}</Table.Cell>
-          <Table.Cell width={4}>{game.release_string}</Table.Cell>
-          <Table.Cell width={4}>{game.subs[0] && `${(game.subs[0].price / 100).toFixed(2)} €`}</Table.Cell>
-          <Table.Cell width={4}>{game.subs[0] && `${game.subs[0].discount_pct} %`}</Table.Cell>
-          <Table.Cell>{game.review_desc}</Table.Cell>
+      {gamesInfos && _.map(gamesInfosTest, ({capsule, name, release_string, subs, review_desc}) => (
+        <Table.Row negative={review_desc === "aucune évaluation d'utilisateurs"}>
+          <Table.Cell collapsing width={2}><Image avatar bordered circular  size="small" src={capsule} /></Table.Cell>
+          <Table.Cell width={4}>{name}</Table.Cell>
+          <Table.Cell width={4}>{release_string}</Table.Cell>
+          <Table.Cell width={4}>{subs[0] && `${(subs[0].price / 100).toFixed(2)} €`}</Table.Cell>
+          <Table.Cell width={4}>{subs[0] && `${subs[0].discount_pct} %`}</Table.Cell>
+          <Table.Cell>{review_desc}</Table.Cell>
         </Table.Row>
-        )})}
+      ))}
       </Table.Body>
     </Table>
 )};

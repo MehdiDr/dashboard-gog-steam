@@ -8,7 +8,7 @@ const MenuExampleInvertedVertical = () => {
   const [activeItem, setActiveItem] = useState('home')
   const handleItemClick = (e, { name }) => setActiveItem({ activeItem: name })
   return (
-    <Menu inverted vertical size="big" fixed="left">
+    <Menu inverted vertical fixed="left">
       <Menu.Item
         className="menu-item"
         name='Home'

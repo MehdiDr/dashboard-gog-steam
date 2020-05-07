@@ -6,23 +6,33 @@ import './styles/Purchases.css';
 
 const Purchases = () => {
   const [gamesList, setGamesList] = useState([]);
+  const urls = [
+    "https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=0",
+    "https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=1"
+  ];
 
-  const fetchData: any = async () => {
-    const urls = [
-      "https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=0",
-      "https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=1"
-    ]
+  useEffect(() => {
+    async function fetchData() {
+      await Promise.all(urls.map(url => fetch(url)
+        .then(res => res.json())
+        //@ts-ignore
+        .then(res => setGamesList(prevState => {
+          return [
+            ...prevState,
+            res
+          ]
+        }))
+        .catch(err => console.log(err))
+      ))
+    }
+    fetchData()
+  }, [])
 
-    await Promise.all(urls.map(url => fetch(url)
-      .then(res => res.json())
-      .then(res => setGamesList(res))
-      .catch(err => console.log(err))
-    ))
-  };
-
-  useEffect(() => fetchData(), [])
-
-  const gamesInfos = gamesList && Object.values(gamesList)
+  const getGamesList = gamesList.reduce((acc, x) => {
+    //@ts-ignore
+    for (let key in x) acc[key] = x[key];
+    return acc;
+}, {})
 
   return (
     <>
@@ -30,7 +40,7 @@ const Purchases = () => {
       <Icon name='play' circular />
       <Header.Content>Liste de souhaits</Header.Content>
     </Header>
-    <GamesList gamesInfos={gamesInfos} />
+    <GamesList gamesInfosArray={[getGamesList]} />
   </>
   )
 }

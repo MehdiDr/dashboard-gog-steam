@@ -5,10 +5,14 @@ import { HowLongToBeatService, HowLongToBeatEntry } from 'howlongtobeat';
 
 import './styles/GamesList.css';
 
-const GamesList = ({ gamesInfos }) => {
+const GamesList = ({ gamesInfosArray }) => {
   const [gamesInfosTest, setGamesInfos] = useState([]);
   const [column, setColumn] = useState(null);
   const [direction, setDirection] = useState(null);
+
+  const gamesInfos = Object.values(gamesInfosArray[0])
+
+  console.log()
 
   const handleSort = clickedColumn => () => {
     if (column !== clickedColumn) {
@@ -21,14 +25,9 @@ const GamesList = ({ gamesInfos }) => {
       setDirection(direction === 'ascending' ? 'descending' : 'ascending');
   }
 
-  console.log('gamesInfos', gamesInfos.length)
-  console.log('gamesInfosTest', gamesInfosTest.length)
-
-
   let hltbService = new HowLongToBeatService();
   // FAIRE UNE REGEX POUR MATCHER LE NOM DU JEU
   hltbService.search("").then(result => result.map(game => <Table.Cell width={4}>{game.gameplayMain}</Table.Cell>))
-
 
   return (
     <Table style={{color: "white"}} basic="very" sortable fixed>
@@ -54,8 +53,8 @@ const GamesList = ({ gamesInfos }) => {
       </Table.Header>
 
       <Table.Body>
-      {(gamesInfosTest.length > 0 ? gamesInfosTest : gamesInfos).map(({capsule, name, release_string, subs, review_desc}) => (
-        <Table.Row>
+      {(gamesInfosTest.length > 0 ? gamesInfosTest : gamesInfos).map(({capsule, name, release_string, subs, review_desc}, index) => (
+        <Table.Row key={index}>
           <Table.Cell collapsing width={2}><Image className="capsule" circular centered  size="small" src={capsule} /></Table.Cell>
           <Table.Cell width={4}>{name}</Table.Cell>
           <Table.Cell width={4}>{release_string}</Table.Cell>
@@ -63,7 +62,7 @@ const GamesList = ({ gamesInfos }) => {
           <Table.Cell width={4}>{subs[0] && `${subs[0].discount_pct} %`}</Table.Cell>
           <Table.Cell>{review_desc}</Table.Cell>
         </Table.Row>
-      ))}
+  ))}
       </Table.Body>
     </Table>
 )};

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Table, Image } from 'semantic-ui-react';
 import _ from 'lodash';
+import { HowLongToBeatService, HowLongToBeatEntry } from 'howlongtobeat';
 
-const Games = ({ gamesInfos }) => {
-  const [gamesInfosTest, setGamesInfos] = useState(gamesInfos);
+import './styles/GamesList.css';
+
+const GamesList = ({ gamesInfos }) => {
+  const [gamesInfosTest, setGamesInfos] = useState([]);
   const [column, setColumn] = useState(null);
   const [direction, setDirection] = useState(null);
 
-  const handleSort = (clickedColumn) => () => {
+  const handleSort = clickedColumn => () => {
     if (column !== clickedColumn) {
       setDirection('ascending');
       setColumn(clickedColumn)
@@ -18,27 +21,42 @@ const Games = ({ gamesInfos }) => {
       setDirection(direction === 'ascending' ? 'descending' : 'ascending');
   }
 
-  console.log(gamesInfos)
+  console.log('gamesInfos', gamesInfos.length)
+  console.log('gamesInfosTest', gamesInfosTest.length)
+
+
+  let hltbService = new HowLongToBeatService();
+  // FAIRE UNE REGEX POUR MATCHER LE NOM DU JEU
+  hltbService.search("").then(result => result.map(game => <Table.Cell width={4}>{game.gameplayMain}</Table.Cell>))
+
 
   return (
-    <Table sortable fixed>
+    <Table style={{color: "white"}} basic="very" sortable fixed>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell></Table.HeaderCell>
-          <Table.HeaderCell sorted={column === 'name' ? direction : null} onClick={handleSort('name')}>
+        <Table.HeaderCell />
+          <Table.HeaderCell className="header-cell" sorted={column === 'name' && direction} onClick={handleSort('name')}>
             Nom
           </Table.HeaderCell>
-          <Table.HeaderCell sorted={column === 'release_string' ? direction : null} onClick={handleSort('release_string')}>Date de sortie</Table.HeaderCell>
-          <Table.HeaderCell >Prix</Table.HeaderCell>
-          <Table.HeaderCell sorted={column === 'release_string' ? direction : null} onClick={handleSort('release_string')}>Reduction</Table.HeaderCell>
-          <Table.HeaderCell sorted={column === 'review_desc' ? direction : null} onClick={handleSort('review_desc')}>Évaluations</Table.HeaderCell>
+          <Table.HeaderCell className="header-cell" sorted={column === 'release_date' && direction} onClick={handleSort('release_date')}>
+            Date de sortie
+          </Table.HeaderCell>
+          <Table.HeaderCell className="header-cell" sorted={column === 'subs[0].price' && direction} onClick={handleSort('subs[0].price')}>
+            Prix
+          </Table.HeaderCell>
+          <Table.HeaderCell className="header-cell" sorted={column === 'subs[0].discount_pct' && direction} onClick={handleSort('subs[0].discount_pct')}>
+            Reduction
+          </Table.HeaderCell>
+          <Table.HeaderCell className="header-cell" sorted={column === 'review_desc' && direction} onClick={handleSort('review_desc')}>
+            Évaluations
+          </Table.HeaderCell>
         </Table.Row>
       </Table.Header>
 
       <Table.Body>
-      {gamesInfos && _.map(gamesInfosTest, ({capsule, name, release_string, subs, review_desc}) => (
-        <Table.Row negative={review_desc === "aucune évaluation d'utilisateurs"}>
-          <Table.Cell collapsing width={2}><Image avatar bordered circular  size="small" src={capsule} /></Table.Cell>
+      {(gamesInfosTest.length > 0 ? gamesInfosTest : gamesInfos).map(({capsule, name, release_string, subs, review_desc}) => (
+        <Table.Row>
+          <Table.Cell collapsing width={2}><Image className="capsule" circular centered  size="small" src={capsule} /></Table.Cell>
           <Table.Cell width={4}>{name}</Table.Cell>
           <Table.Cell width={4}>{release_string}</Table.Cell>
           <Table.Cell width={4}>{subs[0] && `${(subs[0].price / 100).toFixed(2)} €`}</Table.Cell>
@@ -50,4 +68,4 @@ const Games = ({ gamesInfos }) => {
     </Table>
 )};
 
-export default Games;
+export default GamesList;

@@ -1,0 +1,9 @@
+.header-cell {
+  color: white !important;
+  font-size: 1.3em !important;
+}
+
+.header-cell:hover {
+  background-color: white !important;
+  color: black !important;
+}

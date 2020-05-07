@@ -9,8 +9,8 @@ const Purchases = () => {
 
   const fetchData: any = async () => {
     const urls = [
-      "https://cors-anywhere.herokuapp.com/https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=0",
-      "https://cors-anywhere.herokuapp.com/https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=1"
+      "https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=0",
+      "https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=1"
     ]
 
     await Promise.all(urls.map(url => fetch(url)

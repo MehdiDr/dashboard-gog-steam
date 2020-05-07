@@ -12,8 +12,6 @@ const GamesList = ({ gamesInfosArray }) => {
 
   const gamesInfos = Object.values(gamesInfosArray[0])
 
-  console.log()
-
   const handleSort = clickedColumn => () => {
     if (column !== clickedColumn) {
       setDirection('ascending');
@@ -27,7 +25,9 @@ const GamesList = ({ gamesInfosArray }) => {
 
   let hltbService = new HowLongToBeatService();
   // FAIRE UNE REGEX POUR MATCHER LE NOM DU JEU
-  hltbService.search("").then(result => result.map(game => <Table.Cell width={4}>{game.gameplayMain}</Table.Cell>))
+  // HELP PLS I WANNA DIE
+  // const test = gamesInfos.map(game => hltbService.search(string).then(result => console.log(result)));
+  // console.log(test)
 
   return (
     <Table style={{color: "white"}} basic="very" sortable fixed>
@@ -55,7 +55,11 @@ const GamesList = ({ gamesInfosArray }) => {
       <Table.Body>
       {(gamesInfosTest.length > 0 ? gamesInfosTest : gamesInfos).map(({capsule, name, release_string, subs, review_desc}, index) => (
         <Table.Row key={index}>
-          <Table.Cell collapsing width={2}><Image className="capsule" circular centered  size="small" src={capsule} /></Table.Cell>
+          <Table.Cell collapsing width={2}>
+            <a href={`https://store.steampowered.com/app/${capsule.match(/\d+/g)}/${name}/`}>
+              <Image className="capsule" circular centered  size="small" src={capsule} />
+            </a>
+          </Table.Cell>
           <Table.Cell width={4}>{name}</Table.Cell>
           <Table.Cell width={4}>{release_string}</Table.Cell>
           <Table.Cell width={4}>{subs[0] && `${(subs[0].price / 100).toFixed(2)} €`}</Table.Cell>

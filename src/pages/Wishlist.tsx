@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Header, Icon } from 'semantic-ui-react';
 
 import GamesList from '../components/GamesList';
-import './styles/Purchases.css';
+import './styles/Wishlist.css';
 
-const Purchases = () => {
+const Wishlist = () => {
   const [gamesList, setGamesList] = useState([]);
   const urls = [
     "https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=0",
@@ -45,4 +45,4 @@ const Purchases = () => {
   )
 }
 
-export default Purchases;
+export default Wishlist;

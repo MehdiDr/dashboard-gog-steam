@@ -9,6 +9,7 @@ import {
 
 import Wishlist from './pages/Wishlist';
 import Home from './pages/Home';
+import WishlistCompare from './pages/WishlistCompare';
 import './App.css'
 
 const routes = [
@@ -20,6 +21,10 @@ const routes = [
   {
     path: "/wishlist",
     main: () => <Wishlist />
+  },
+  {
+    path: "/wishlist-compare",
+    main: () => <WishlistCompare />
   },
 ];
 
@@ -44,19 +49,21 @@ const App = () => {
                 />
                 </Link>
                 <Link to="/wishlist">
-                  <Menu.Item
-                  className="menu-item"
-                  name='Liste de souhaits'
-                  active={activeItem === 'wishlist'}
-                  onClick={handleItemClick}
-                />
+                    <Menu.Item
+                    className="menu-item"
+                    name='Liste de souhaits'
+                    active={activeItem === 'wishlist'}
+                    onClick={handleItemClick}
+                  />
                 </Link>
-                <Menu.Item
-                  className="menu-item"
-                  name='La thune'
-                  active={activeItem === 'money'}
-                  onClick={handleItemClick}
-                />
+                <Link to="/wishlist-compare">
+                  <Menu.Item
+                    className="menu-item"
+                    name='Comparez des wishlist'
+                    active={activeItem === 'wishListCompare'}
+                    onClick={handleItemClick}
+                  />
+                </Link>
               </Menu>
             </Grid.Column>
 

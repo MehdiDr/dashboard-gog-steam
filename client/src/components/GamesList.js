@@ -10,7 +10,7 @@ const GamesList = ({ gamesInfosArray }) => {
   const [column, setColumn] = useState(null);
   const [direction, setDirection] = useState(null);
 
-  const gamesInfos = Object.values(gamesInfosArray[0])
+  const gamesInfos = Object.values(gamesInfosArray)
 
   const handleSort = clickedColumn => () => {
     if (column !== clickedColumn) {

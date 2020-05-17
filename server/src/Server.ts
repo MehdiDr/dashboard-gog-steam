@@ -6,6 +6,8 @@ import helmet from 'helmet';
 import express, { Request, Response, NextFunction } from 'express';
 import { BAD_REQUEST } from 'http-status-codes';
 import 'express-async-errors';
+//@ts-ignore
+import cors from 'cors';
 
 import BaseRouter from './routes';
 import logger from '@shared/Logger';
@@ -14,13 +16,12 @@ import logger from '@shared/Logger';
 // Init express
 const app = express();
 
-
-
 /************************************************************************************
  *                              Set basic express settings
  ***********************************************************************************/
 
 app.use(express.json());
+app.use(cors({origin: "http://localhost:9000"}));
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
@@ -51,12 +52,9 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
  *                              Serve front-end content
  ***********************************************************************************/
 
-const viewsDir = path.join(__dirname, 'views');
-app.set('views', viewsDir);
-const staticDir = path.join(__dirname, 'public');
-app.use(express.static(staticDir));
-app.get('*', (req: Request, res: Response) => {
-    res.sendFile('index.html', {root: viewsDir});
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'../../../client/build/index.html'));
 });
 
 // Export express instance

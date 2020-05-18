@@ -6,44 +6,37 @@ import GamesList from '../components/GamesList';
 import './styles/Wishlist.css';
 
 const Wishlist = () => {
-  const [gamesList, setGamesList] = useState([]);
+  const [steamGamesList, setSteamGamesList] = useState([]);
   const [gamesListGog, setGamesListGog] = useState([])
-  const urls = [
-    "https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=0",
-    "https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=1"
-  ];
-
-  // 4aamDNalEBbjfRLyOtni_QacLiUljP3QP6tVFoOmdFc
 
   useEffect(() => {
     async function fetchGogWithlist() {
-      // @ts-ignore
-      await axios.get('https://embed.gog.com/user/wishlist.json', {}, {headers: {'x-Trigger': 'CORS', 'Access-Control-Allow-Origin': '*', 'Authorization': 'Bearer kE00zZ0gI2llQDTZhyC27YLAjtZMg9a0ilmm5e5Fjuw'}})
-        .then((res: any) => res.json())
-        //@ts-ignore
-        .then(res => setGamesListGog(res))
-        .catch((err: any) => console.log(err))
+      try {
+        const gogApiResp = await fetch('/api/gog/wishlist');
+        const gogData = await gogApiResp.json();
+        return setGamesListGog(gogData);
+      } catch(e) {
+         console.log(e)
+      }
     }
+    fetchData()
     async function fetchData() {
-      await Promise.all(urls.map(url => fetch(url, {mode: 'no-cors'})
-        .then(res => res.json())
-        //@ts-ignore
-        .then(res => setGamesList(prevState => {
-          return [
-            ...prevState,
-            res
-          ]
-        }))
-        .catch(err => console.log(err))
-      ))
+      try {
+        const steamApiResp = await fetch('/api/steam/wishlist')
+        const steamData = await steamApiResp.json();
+        return setSteamGamesList(steamData);
+      } catch(e) {
+        console.log(e)
+      }
     }
     fetchData()
     fetchGogWithlist()
   }, [])
 
   console.log('gamesListGog', gamesListGog);
+  console.log('STEAM', steamGamesList);
 
-  const getGamesList = gamesList.reduce((acc, x) => {
+  const getGamesList = steamGamesList.reduce((acc, x) => {
     //@ts-ignore
     for (let key in x) acc[key] = x[key];
     return acc;
@@ -55,7 +48,7 @@ const Wishlist = () => {
       <Icon name='play' circular />
       <Header.Content>Liste de souhaits</Header.Content>
     </Header>
-    <GamesList gamesInfosArray={getGamesList} />
+    <GamesList steamGamesInfosArray={getGamesList} gogGamesInfosArray={gamesListGog} />
   </>
   )
 }

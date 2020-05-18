@@ -90,7 +90,6 @@ const WishlistCompare = () => {
       </Header>
 
       <Input value={inputValue} onChange={e => setInputValue(e.target.value)} icon='users' iconPosition='left' placeholder="Entrez un ID" />
-      <GamesList gamesInfosArray={getGamesList} />
     </>
   )
 }

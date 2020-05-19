@@ -5,10 +5,15 @@ import fetch from 'node-fetch';
 const router = Router();
 
 router.get('/wishlist', async (req: Request, res: Response) => {
+  const token = await fetch('https://auth.gog.com/token?client_id=46899977096215655&client_secret=9d85c43b1482497dbbce61f6e4aa173a433796eeae2ca8c5f6129f2dc4de46d9&grant_type=refresh_token&code=0EOAkRSp2r3ITKWojCBPJTaAPsrSQ7CTL9EsDS_lOKcTgkeUUtlK7uizvcklp0oioPVeo-czpuX3qgqOQTLgoUZfRk0RSRbkn9r_0odU6E-SFd6E8OURLgCIAZR6Q69jdlmWHAR079PIUknySUKzGgqDB9Gg6pEbibmUJTIPgWM&refresh_token=AaAHnHnE3FNMYwVEm0MBDm-vgqcQ84uoRQ0iFWu5D1CmOVNqGpADZNEBXDMN_x_0')
+    .then(resp => resp.json())
+    .then(resp => resp.access_token)
+    .catch(err => console.log(err));
+
   const wishlistData = await fetch('https://embed.gog.com/user/wishlist.json',
   {
     headers: {
-      'Authorization': 'Bearer rnedoX6gUMQzd2lxdffF8FE62BuqEd3MDlEET2f6-oR0Bt4s-IAnZoxYqyQ9tErbH8zMIXD5_INzywFTPHBPG2WOpCnZCRcdLYM410mU1hm5WeRF3ILYlhW_dM8mYK8XiPld0o9hhhn9g49h7Db4_zfrkoth5-zhEa1CM2AL9Gk'
+      'Authorization': `Bearer ${token}`
     }
   })
     .then(resp => resp.json())
@@ -42,7 +47,7 @@ router.get('/wishlist', async (req: Request, res: Response) => {
       const data = await resp.json();
       return {data, images}
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }))
 
@@ -50,7 +55,3 @@ router.get('/wishlist', async (req: Request, res: Response) => {
 });
 
 export default router;
-
-
-// token: https://auth.gog.com/token?client_id=46899977096215655&client_secret=9d85c43b1482497dbbce61f6e4aa173a433796eeae2ca8c5f6129f2dc4de46d9&grant_type=authorization_code&code=0EOAkRSp2r3ITKWojCBPJTaAPsrSQ7CTL9EsDS_lOKcTgkeUUtlK7uizvcklp0oioPVeo-czpuX3qgqOQTLgoUZfRk0RSRbkn9r_0odU6E-SFd6E8OURLgCIAZR6Q69jdlmWHAR079PIUknySUKzGgqDB9Gg6pEbibmUJTIPgWM&redirect_uri=&redirect_uri=https%3A%2F%2Fembed.gog.com%2Fon_login_success%3Forigin%3Dclient
-// refresh: https://auth.gog.com/token?client_id=46899977096215655&client_secret=9d85c43b1482497dbbce61f6e4aa173a433796eeae2ca8c5f6129f2dc4de46d9&grant_type=refresh_token&code=0EOAkRSp2r3ITKWojCBPJTaAPsrSQ7CTL9EsDS_lOKcTgkeUUtlK7uizvcklp0oioPVeo-czpuX3qgqOQTLgoUZfRk0RSRbkn9r_0odU6E-SFd6E8OURLgCIAZR6Q69jdlmWHAR079PIUknySUKzGgqDB9Gg6pEbibmUJTIPgWM&refresh_token=AaAHnHnE3FNMYwVEm0MBDm-vgqcQ84uoRQ0iFWu5D1CmOVNqGpADZNEBXDMN_x_0

@@ -7,6 +7,7 @@ import {
   Link
 } from "react-router-dom";
 
+import { ContextProvider } from './context/Context';
 import Wishlist from './pages/Wishlist';
 import Home from './pages/Home';
 import WishlistCompare from './pages/WishlistCompare';
@@ -35,53 +36,55 @@ const App = () => {
   const handleItemClick = (e: Object, { name }: any) => setActiveItem({ activeItem: name })
   return (
     <Router>
-      <div className="App">
-        <Grid height={100}>
-          <Grid.Row>
-            <Grid.Column width={4}>
-              <Menu inverted vertical fixed="left">
-                <Link to="/">
-                  <Menu.Item
-                  className="menu-item"
-                  name='Home'
-                  active={activeItem === 'home'}
-                  onClick={handleItemClick}
-                />
-                </Link>
-                <Link to="/wishlist">
+      <ContextProvider>
+        <div className="App">
+          <Grid height={100}>
+            <Grid.Row>
+              <Grid.Column width={4}>
+                <Menu inverted vertical fixed="left">
+                  <Link to="/">
                     <Menu.Item
                     className="menu-item"
-                    name='Liste de souhaits'
-                    active={activeItem === 'wishlist'}
+                    name='Home'
+                    active={activeItem === 'home'}
                     onClick={handleItemClick}
                   />
-                </Link>
-                <Link to="/wishlist-compare">
-                  <Menu.Item
-                    className="menu-item"
-                    name='Comparez des wishlist'
-                    active={activeItem === 'wishListCompare'}
-                    onClick={handleItemClick}
-                  />
-                </Link>
-              </Menu>
-            </Grid.Column>
+                  </Link>
+                  <Link to="/wishlist">
+                      <Menu.Item
+                      className="menu-item"
+                      name='Liste de souhaits'
+                      active={activeItem === 'wishlist'}
+                      onClick={handleItemClick}
+                    />
+                  </Link>
+                  <Link to="/wishlist-compare">
+                    <Menu.Item
+                      className="menu-item"
+                      name='Comparez des wishlist'
+                      active={activeItem === 'wishListCompare'}
+                      onClick={handleItemClick}
+                    />
+                  </Link>
+                </Menu>
+              </Grid.Column>
 
-            <Grid.Column width={10}>
-              <Switch>
-                {routes.map((route, index) => (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    exact={route.exact}
-                    children={<route.main />}
-                  />
-                ))}
-              </Switch>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </div>
+              <Grid.Column width={10}>
+                <Switch>
+                  {routes.map((route, index) => (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      exact={route.exact}
+                      children={<route.main />}
+                    />
+                  ))}
+                </Switch>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
+      </ContextProvider>
     </Router>
   )
 }

@@ -9,12 +9,6 @@ import './styles/Wishlist.css';
 const Wishlist = () => {
   const {steamGamesList, setSteamGamesList, gamesListGog, setGamesListGog} = useContext(Context);
 
-  const getGamesList = steamGamesList.reduce((acc, x) => {
-    //@ts-ignore
-    for (let key in x) acc[key] = x[key];
-    return acc;
-}, {})
-
   useEffect(() => {
     async function fetchGogWithlist() {
       try {
@@ -43,13 +37,13 @@ const Wishlist = () => {
 
   return (
     <>
-    <Header className="header" as='h2' icon textAlign='center'>
-      <Icon name='play' circular />
-      <Header.Content>Liste de souhaits</Header.Content>
-    </Header>
-    <FilterButtons />
-    <GamesList steamGamesInfosArray={getGamesList} gogGamesInfosArray={gamesListGog} />
-  </>
+      <Header className="header" as='h2' icon textAlign='center'>
+        <Icon name='play' circular />
+        <Header.Content>Liste de souhaits</Header.Content>
+      </Header>
+      <FilterButtons />
+      <GamesList steamGamesInfosArray={steamGamesList} gogGamesInfosArray={gamesListGog} />
+    </>
   )
 }
 

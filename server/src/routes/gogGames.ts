@@ -51,7 +51,22 @@ router.get('/wishlist', async (req: Request, res: Response) => {
     }
   }))
 
-  res.send(gamesInfosArray);
+  const formattedData = gamesInfosArray.map(game => {
+    if(!(game?.data?.products.length > 0)) return null
+    const {title, url, releaseDate, price} = game?.data?.products[0];
+
+    return {
+      name: title,
+      logo: `http://${game?.images?.logo.slice(2)}`,
+      linkToShop: `https://gog.com/${url}`,
+      releaseDate,
+      price: price.amount,
+      discount: price.discountPercentage,
+      platform: 'gog'
+    }
+  });
+
+  res.send(formattedData);
 });
 
 export default router;

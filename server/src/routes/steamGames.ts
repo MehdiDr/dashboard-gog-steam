@@ -15,7 +15,26 @@ router.get('/wishlist', async (req: Request, res: Response) => {
       .catch(err => console.log(err))
   ))
 
-  res.send(data)
+  const getGamesList = data.reduce((acc, x) => {
+    for (let key in x) acc[key] = x[key];
+    return acc;
+  }, {})
+
+  //@ts-ignore
+  const formattedData = Object.values(getGamesList).map(({capsule, name, release_date, subs, review_desc}) => {
+    return {
+      name,
+      logo: capsule,
+      linkToShop: capsule && `https://store.steampowered.com/app/${capsule.match(/\d+/g)}/${name}`,
+      releaseDate: release_date,
+      price: subs && subs.length > 0 && (subs[0].price / 100),
+      discount: subs && subs.length > 0 && subs[0].discount_pct,
+      reviews: review_desc,
+      platform: 'steam'
+    }
+  })
+
+  res.send(formattedData);
 });
 
 export default router;

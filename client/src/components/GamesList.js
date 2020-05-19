@@ -12,16 +12,18 @@ const GamesList = ({ steamGamesInfosArray, gogGamesInfosArray }) => {
   const [column, setColumn] = useState(null);
   const [direction, setDirection] = useState(null);
 
-  const gamesInfos = Object.values(steamGamesInfosArray)
+  const allGames = [...steamGamesInfosArray, ...gogGamesInfosArray];
+  const steamGamesFilter = allGames.filter(game => game && game.platform === 'steam');
+  const gogGamesFilter = allGames.filter(game => game && game.platform === 'gog');
 
   const handleSort = clickedColumn => () => {
     if (column !== clickedColumn) {
       setDirection('ascending');
       setColumn(clickedColumn)
-      setGamesInfosSorted(_.sortBy(gamesInfos, [clickedColumn]))
+      setGamesInfosSorted(_.sortBy(allGames, [clickedColumn]))
       return
     }
-      setGamesInfosSorted(gamesInfos.reverse());
+      setGamesInfosSorted(gamesInfosSorted.reverse());
       setDirection(direction === 'ascending' ? 'descending' : 'ascending');
   }
 
@@ -33,19 +35,19 @@ const GamesList = ({ steamGamesInfosArray, gogGamesInfosArray }) => {
           <Table.HeaderCell className="header-cell" sorted={column === 'name' ? direction : null} onClick={handleSort('name')}>
             Nom
           </Table.HeaderCell>
-          <Table.HeaderCell className="header-cell" sorted={column === 'release_date' ? direction : null} onClick={handleSort('release_date')}>
+          <Table.HeaderCell className="header-cell" sorted={column === 'releaseDate' ? direction : null} onClick={handleSort('releaseDate')}>
             Date de sortie
           </Table.HeaderCell>
-          <Table.HeaderCell className="header-cell" sorted={column === 'subs[0].price' ? direction : null} onClick={handleSort('subs[0].price')}>
+          <Table.HeaderCell className="header-cell" sorted={column === 'price' ? direction : null} onClick={handleSort('price')}>
             Prix
           </Table.HeaderCell>
-          <Table.HeaderCell className="header-cell" sorted={column === 'subs[0].discount_pct' ? direction : null} onClick={handleSort('subs[0].discount_pct')}>
+          <Table.HeaderCell className="header-cell" sorted={column === 'discount' ? direction : null} onClick={handleSort('discount')}>
             Reduction
           </Table.HeaderCell>
-          <Table.HeaderCell className="header-cell" sorted={column === 'review_desc' ? direction : null} onClick={handleSort('review_desc')}>
+          <Table.HeaderCell className="header-cell" sorted={column === 'reviews' ? direction : null} onClick={handleSort('reviews')}>
             Évaluations
           </Table.HeaderCell>
-          <Table.HeaderCell className="header-cell" sorted={column === 'review_desc' ? direction : null} onClick={handleSort('review_desc')}>
+          <Table.HeaderCell className="header-cell" sorted={column === 'platform' ? direction : null} onClick={handleSort('platform')}>
             Plateforme
           </Table.HeaderCell>
         </Table.Row>
@@ -53,54 +55,34 @@ const GamesList = ({ steamGamesInfosArray, gogGamesInfosArray }) => {
 
       <Table.Body>
       {
-        clickedButton === 1 || clickedButton === 2 &&
-        gogGamesInfosArray.length > 0 && gogGamesInfosArray.map((game, index) => {
-        if(game?.data?.products.length > 0) {
-          const {title, url, rating, releaseDate, price} = game.data.products[0];
+        (clickedButton === 1 && (gamesInfosSorted.length > 0 ? gamesInfosSorted : allGames) ||
+          clickedButton === 2 && gogGamesFilter ||
+          clickedButton === 3 && steamGamesFilter).map((game, index) => {
+          if(!game) return null;
+          const {name, logo, releaseDate, linkToShop, price, discount, reviews, platform} = game;
           return (
             <Table.Row key={index}>
               <Table.Cell collapsing width={2}>
                 <Image
+                  onClick={() => window.open(linkToShop, '_blank')}
                   className="capsule"
-                  onClick={() => window.open(`https://gog.com/${url}`, '_blank')}
-                  centered
                   circular
+                  centered
                   size="small"
-                  src={`http://${game?.images?.logo.slice(2)}`}
+                  src={logo}
                 />
               </Table.Cell>
-              <Table.Cell width={4}>{title}</Table.Cell>
-              <Table.Cell width={4}>{moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString()}</Table.Cell>
-              <Table.Cell width={4}>{`${price.amount} ${price.symbol}`}</Table.Cell>
-              <Table.Cell width={4}>{`${price.discountPercentage} %`}</Table.Cell>
-              <Table.Cell width={4}>{rating}</Table.Cell>
-              <Table.Cell width={4}>Gog</Table.Cell>
+              <Table.Cell width={4}>{name}</Table.Cell>
+              <Table.Cell width={4}>
+                {(moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString()) !== "01 Jan, 1970" ? moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString(): 'Pas annoncé'}
+              </Table.Cell>
+              <Table.Cell width={4}>{price ? `${price} €` : 'Non Défini'}</Table.Cell>
+              <Table.Cell width={4}>{discount ? `${discount} %` : '0 %'}</Table.Cell>
+              <Table.Cell>{reviews}</Table.Cell>
+              <Table.Cell width={4}>{platform}</Table.Cell>
             </Table.Row>
           )
-        }
-      })}
-      {
-        clickedButton === 1 || clickedButton === 3 &&
-        (gamesInfosSorted.length > 0 ? gamesInfosSorted : gamesInfos).map(({capsule, name, release_string, subs, review_desc}, index) => (
-        <Table.Row key={index}>
-          <Table.Cell collapsing width={2}>
-              <Image
-                onClick={() => window.open(`https://store.steampowered.com/app/${capsule.match(/\d+/g)}/${name}/`, '_blank')}
-                className="capsule"
-                circular
-                centered
-                size="small"
-                src={capsule}
-              />
-          </Table.Cell>
-          <Table.Cell width={4}>{name}</Table.Cell>
-          <Table.Cell width={4}>{release_string}</Table.Cell>
-          <Table.Cell width={4}>{subs[0] && `${(subs[0].price / 100).toFixed(2)} €`}</Table.Cell>
-          <Table.Cell width={4}>{subs[0] && `${subs[0].discount_pct} %`}</Table.Cell>
-          <Table.Cell>{review_desc}</Table.Cell>
-          <Table.Cell width={4}>Steam</Table.Cell>
-        </Table.Row>
-  ))}
+        })}
       </Table.Body>
     </Table>
 )};

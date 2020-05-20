@@ -20,8 +20,7 @@ router.get('/wishlist', async (req: Request, res: Response) => {
     return acc;
   }, {})
 
-  //@ts-ignore
-  const formattedData = Object.values(getGamesList).map(({capsule, name, release_date, subs, review_desc}) => {
+  const formattedData = Object.values(getGamesList).map(({capsule, name, release_date, subs, review_desc}: any) => {
     return {
       name,
       logo: capsule,

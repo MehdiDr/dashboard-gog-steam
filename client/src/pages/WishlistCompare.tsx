@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Header, Icon, Input } from 'semantic-ui-react';
 import _ from 'lodash';
 
-import GamesList from '../components/GamesList';
+import GamesList from '../components/GamesList/GamesList';
 import './styles/Wishlist.css';
 
 const WishlistCompare = () => {

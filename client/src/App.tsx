@@ -44,14 +44,16 @@ const App = () => {
                 <Menu inverted vertical fixed="left">
                   <Link to="/">
                     <Menu.Item
+                      as='div'
                       className="menu-item"
                       name='Home'
-                      active={activeItem === 'home'}
+                      active={activeItem === 'Home'}
                       onClick={handleItemClick}
                     />
                   </Link>
                   <Link to="/wishlist">
                     <Menu.Item
+                      as='div'
                       className="menu-item"
                       name='Liste de souhaits'
                       active={activeItem === 'Liste de souhaits'}
@@ -60,6 +62,7 @@ const App = () => {
                   </Link>
                   <Link to="/wishlist-compare">
                     <Menu.Item
+                      as='div'
                       className="menu-item"
                       name='Comparez des wishlist'
                       active={activeItem === 'wishListCompare'}

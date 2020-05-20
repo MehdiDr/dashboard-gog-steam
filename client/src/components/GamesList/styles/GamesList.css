@@ -1,6 +1,10 @@
 * {
   font-size: 1em !important;
 }
+.table {
+  color: white !important;
+  margin-top: 7em !important;
+}
 
 .header-cell {
   color: white !important;
@@ -8,8 +12,8 @@
 }
 
 .header-cell:hover {
-  background-color: white !important;
-  color: black !important;
+  background-color: black !important;
+  color: white !important;
 }
 
 .table-row {

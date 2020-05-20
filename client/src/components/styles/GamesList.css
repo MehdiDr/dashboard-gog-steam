@@ -1,9 +1,26 @@
+* {
+  font-size: 1em !important;
+}
+
 .header-cell {
   color: white !important;
-  font-size: 1.3em !important;
+  margin-top: 7em !important;
 }
 
 .header-cell:hover {
   background-color: white !important;
   color: black !important;
+}
+
+.table-row {
+  background-color: #3c4c5d !important;
+  margin-bottom: 1em !important;
+  box-shadow: black !important;
+  transition: all .2s ease-in-out;
+}
+
+.table-row:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  background-color: black !important;
 }

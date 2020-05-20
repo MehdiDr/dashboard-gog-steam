@@ -1,18 +1,17 @@
 import React, { useState, useContext } from 'react';
-import { Table, Image } from 'semantic-ui-react';
+import { Table, Image, Dimmer, Loader } from 'semantic-ui-react';
 import _ from 'lodash';
 import moment from 'moment';
 
 import { Context } from '../context/Context';
 import './styles/GamesList.css';
 
-const GamesList = ({ steamGamesInfosArray, gogGamesInfosArray }) => {
-  const { clickedButton } = useContext(Context);
+const GamesList = ({ allGames }) => {
+  const { clickedButton, setLoading } = useContext(Context);
   const [gamesInfosSorted, setGamesInfosSorted] = useState([]);
   const [column, setColumn] = useState(null);
   const [direction, setDirection] = useState(null);
 
-  const allGames = [...steamGamesInfosArray, ...gogGamesInfosArray];
   const steamGamesFilter = allGames.filter(game => game && game.platform === 'steam');
   const gogGamesFilter = allGames.filter(game => game && game.platform === 'gog');
 
@@ -55,16 +54,17 @@ const GamesList = ({ steamGamesInfosArray, gogGamesInfosArray }) => {
 
       <Table.Body>
       {
+        allGames.length === 0 ? setLoading(true) :
         (clickedButton === 1 && (gamesInfosSorted.length > 0 ? gamesInfosSorted : allGames) ||
           clickedButton === 2 && gogGamesFilter ||
           clickedButton === 3 && steamGamesFilter).map((game, index) => {
           if(!game) return null;
           const {name, logo, releaseDate, linkToShop, price, discount, reviews, platform} = game;
+          setLoading(false)
           return (
-            <Table.Row key={index}>
+            <Table.Row className="table-row" key={index} onClick={() => window.open(linkToShop, '_blank')}>
               <Table.Cell collapsing width={2}>
                 <Image
-                  onClick={() => window.open(linkToShop, '_blank')}
                   className="capsule"
                   circular
                   centered
@@ -72,14 +72,14 @@ const GamesList = ({ steamGamesInfosArray, gogGamesInfosArray }) => {
                   src={logo}
                 />
               </Table.Cell>
-              <Table.Cell width={4}>{name}</Table.Cell>
-              <Table.Cell width={4}>
+              <Table.Cell>{name}</Table.Cell>
+              <Table.Cell>
                 {(moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString()) !== "01 Jan, 1970" ? moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString(): 'Pas annoncé'}
               </Table.Cell>
-              <Table.Cell width={4}>{price ? `${price} €` : 'Non Défini'}</Table.Cell>
-              <Table.Cell width={4}>{discount ? `${discount} %` : '0 %'}</Table.Cell>
+              <Table.Cell>{price ? `${price} €` : 'Non Défini'}</Table.Cell>
+              <Table.Cell>{discount ? `${discount} %` : '0 %'}</Table.Cell>
               <Table.Cell>{reviews}</Table.Cell>
-              <Table.Cell width={4}>{platform}</Table.Cell>
+              <Table.Cell>{ <Image size='mini' src={ platform ==='steam' ? 'http://icons.iconarchive.com/icons/papirus-team/papirus-apps/256/steam-icon.png' : 'https://img.utdstc.com/icons/gog-galaxy.png:225'} /> }</Table.Cell>
             </Table.Row>
           )
         })}

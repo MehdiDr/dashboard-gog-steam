@@ -35,6 +35,8 @@ const Wishlist = () => {
     fetchGogWithlist()
   }, [])
 
+  const allGames= [...steamGamesList, ...gamesListGog]
+
   return (
     <>
       <Header className="header" as='h2' icon textAlign='center'>
@@ -42,7 +44,7 @@ const Wishlist = () => {
         <Header.Content>Liste de souhaits</Header.Content>
       </Header>
       <FilterButtons />
-      <GamesList steamGamesInfosArray={steamGamesList} gogGamesInfosArray={gamesListGog} />
+      <GamesList allGames={allGames} />
     </>
   )
 }

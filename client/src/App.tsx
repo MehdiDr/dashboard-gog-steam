@@ -39,22 +39,22 @@ const App = () => {
       <ContextProvider>
         <div className="App">
           <Grid height={100}>
-            <Grid.Row>
-              <Grid.Column width={4}>
+            <Grid.Row columns={2}>
+              <Grid.Column width={2}>
                 <Menu inverted vertical fixed="left">
                   <Link to="/">
                     <Menu.Item
-                    className="menu-item"
-                    name='Home'
-                    active={activeItem === 'home'}
-                    onClick={handleItemClick}
-                  />
+                      className="menu-item"
+                      name='Home'
+                      active={activeItem === 'home'}
+                      onClick={handleItemClick}
+                    />
                   </Link>
                   <Link to="/wishlist">
-                      <Menu.Item
+                    <Menu.Item
                       className="menu-item"
                       name='Liste de souhaits'
-                      active={activeItem === 'wishlist'}
+                      active={activeItem === 'Liste de souhaits'}
                       onClick={handleItemClick}
                     />
                   </Link>
@@ -69,7 +69,7 @@ const App = () => {
                 </Menu>
               </Grid.Column>
 
-              <Grid.Column width={10}>
+              <Grid.Column stretched width={14}>
                 <Switch>
                   {routes.map((route, index) => (
                     <Route

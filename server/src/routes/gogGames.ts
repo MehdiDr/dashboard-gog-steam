@@ -53,7 +53,7 @@ router.get('/wishlist', async (req: Request, res: Response) => {
 
   const formattedData = gamesInfosArray.map(game => {
     if(!(game?.data?.products.length > 0)) return null
-    const {title, url, releaseDate, price} = game?.data?.products[0];
+    const {title, url, releaseDate, price, rating} = game?.data?.products[0];
 
     return {
       name: title,
@@ -62,6 +62,7 @@ router.get('/wishlist', async (req: Request, res: Response) => {
       releaseDate,
       price: price.amount,
       discount: price.discountPercentage,
+      reviews: rating,
       platform: 'gog'
     }
   });

@@ -4,8 +4,7 @@ import _ from 'lodash';
 
 import './styles/GamesList.css';
 
-const HeaderGamesList = ({ allGames }) => {
-  const [gamesInfosSorted, setGamesInfosSorted] = useState([]);
+const HeaderGamesList = ({ allGames, gamesInfosSorted, setGamesInfosSorted }) => {
   const [column, setColumn] = useState(null);
   const [direction, setDirection] = useState(null);
   const gamesAttributes = ['name', 'releaseDate', 'price', 'reviews', 'platform'];

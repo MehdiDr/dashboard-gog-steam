@@ -1,0 +1,26 @@
+.container-friends {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-card {
+  display: grid;
+  left: 0;
+  width: calc(100% - 29px);
+  grid-template-columns: 25% 25% 25% 25%;
+}
+
+.card {
+  background-color: #191a1e !important;
+}
+
+.card-header {
+  display:flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-content {
+  color: white;
+}

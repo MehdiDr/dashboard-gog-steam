@@ -1,12 +1,11 @@
 import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import path from 'path';
 import helmet from 'helmet';
-
 import express, { Request, Response, NextFunction } from 'express';
 import { BAD_REQUEST } from 'http-status-codes';
 import 'express-async-errors';
-//@ts-ignore
 import cors from 'cors';
 
 import BaseRouter from './routes';
@@ -22,7 +21,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({origin: 'http://localhost:9000'}));
-app.use(express.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
 // Show routes called in console during development
@@ -52,10 +51,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
  *                              Serve front-end content
  ***********************************************************************************/
 
-app.use(express.static(path.join(__dirname, '../../../client/build')));
-app.get('*', (req,res) =>{
-  res.sendFile(path.join(__dirname+'../../../client/build/index.html'));
-});
+app.use(express.static(path.join(__dirname, '../../client', 'build')));
+app.use(express.static('public'));
 
 // Export express instance
 export default app;

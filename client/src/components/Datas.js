@@ -41,3 +41,25 @@ export async function fetchGogUser() {
     console.log(e)
   }
 }
+
+export async function fetchSteamFriends() {
+  try {
+    const steamApiResp = await fetch('/api/steam/friends')
+    const steamData = await steamApiResp.json();
+
+    return steamData;
+  } catch(e) {
+    console.log(e)
+  }
+}
+
+export async function fetchSteamFriendWishlist(steamId) {
+  try {
+    const steamApiResp = await fetch(`/api/steam/friend/${steamId}`)
+    const steamData = await steamApiResp.json();
+
+    return steamData;
+  } catch(e) {
+    console.log(e)
+  }
+}

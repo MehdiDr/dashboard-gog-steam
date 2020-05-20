@@ -9,11 +9,11 @@ router.get('/user', async (req: Request, res: Response) => {
     .then(resp => resp.json())
     .catch(err => console.log(err));
 
-    const formattedData = {
-      gogUsername: datas.username,
-      gogAvatar: datas.avatars.medium,
-      gogProfileUrl: 'https://www.gog.com/feed'
-    }
+    const formattedData = [{
+      username: datas.username,
+      avatar: datas.avatars.medium,
+      profileUrl: 'https://www.gog.com/feed'
+    }]
 
   res.send(formattedData);
 });
@@ -72,7 +72,7 @@ router.get('/wishlist', async (req: Request, res: Response) => {
 
     return {
       name: title,
-      logo: `http://${game?.images?.logo.slice(2)}`,
+      logo: `http://${game?.images?.logo2x.slice(2)}`,
       linkToShop: `https://gog.com/${url}`,
       releaseDate,
       price: price.amount,

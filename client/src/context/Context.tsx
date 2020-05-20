@@ -3,16 +3,18 @@ import GameLoader from '../components/Loader';
 
 interface ContextProps {
   steamGamesList: object[];
+  steamFriendGamesList: object[];
   setSteamGamesList: (data: any) => void;
+  setSteamFriendGamesList: (data: any) => void;
   gamesListGog: object[];
   setGamesListGog: (data: any) => void;
   clickedButton: number;
   setClickButton: (e: number) => void;
   isLoading: boolean;
   setLoading: (loading:boolean) => void;
-  steamUserInfos: object;
+  steamUserInfos: object[];
   setSteamUserInfos: (data: any) => void
-  gogUserInfos: object;
+  gogUserInfos: object[];
   setGogUserInfos: (data: any) => void
 }
 
@@ -20,17 +22,20 @@ const Context = React.createContext({} as ContextProps);
 
 const ContextProvider = (props:any) => {
   const [steamGamesList, setSteamGamesList] = useState([]);
+  const [steamFriendGamesList, setSteamFriendGamesList] = useState([]);
   const [gamesListGog, setGamesListGog] = useState([]);
   const [clickedButton, setClickButton] = useState(1);
   const [isLoading, setLoading] = useState(false);
-  const [steamUserInfos, setSteamUserInfos] = useState({});
-  const [gogUserInfos, setGogUserInfos] = useState({});
+  const [steamUserInfos, setSteamUserInfos] = useState([]);
+  const [gogUserInfos, setGogUserInfos] = useState([]);
 
 
   return (
     <Context.Provider value={{
       steamGamesList,
+      steamFriendGamesList,
       setSteamGamesList,
+      setSteamFriendGamesList,
       gamesListGog,
       setGamesListGog,
       clickedButton,
@@ -42,7 +47,7 @@ const ContextProvider = (props:any) => {
       gogUserInfos,
       setGogUserInfos
     }}>
-    {isLoading && <GameLoader />}
+      {isLoading && <GameLoader />}
       {props.children}
     </Context.Provider>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Table } from 'semantic-ui-react';
 import Img from 'react-cool-img';
 import _ from 'lodash';
@@ -7,9 +7,8 @@ import moment from 'moment';
 import { Context } from '../../context/Context';
 import './styles/GamesList.css';
 
-const BodyGamesList = ({ allGames }) => {
+const BodyGamesList = ({ allGames, gamesInfosSorted }) => {
   const { clickedButton, setLoading } = useContext(Context);
-  const [gamesInfosSorted, setGamesInfosSorted] = useState([]);
 
   const steamGamesFilter = allGames.filter(game => game && game.platform === 'steam');
   const gogGamesFilter = allGames.filter(game => game && game.platform === 'gog');

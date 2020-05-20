@@ -15,10 +15,10 @@
   top: 7px;
   height: 1.5em;
   align-items: center;
-  width: 35%;
+  width: 75%;
 }
 
-.menu-buttons {
+.container-menu-buttons {
   width: 25%;
   display: flex;
   justify-content: space-around;
@@ -30,7 +30,7 @@ li {
   padding: 15px 0;
 }
 
-div span {
+.menu-buttons, .span-account {
   color: #fff;
   text-transform: uppercase;
   text-decoration: none;
@@ -40,7 +40,13 @@ div span {
   padding: 15px 20px;
   position: relative;
 }
-div span:after {
+
+.span-account {
+  font-size: 0.7em !important;
+  letter-spacing: 0.1em;
+  padding: 5px 10px !important;
+}
+.menu-buttons:after {
   background: none repeat scroll 0 0 transparent;
   bottom: 0;
   content: "";
@@ -52,24 +58,20 @@ div span:after {
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
-div span:hover:after {
+.menu-buttons:hover:after {
   width: 100%;
   left: 0;
 }
 
 .container-user-accounts {
-  position: relative;
-  left: 2em;
   display: flex;
 }
 
 .container-account {
-  position: relative;
-  left: 2em;
   display: flex;
   align-items: center;
 }
 
 .container-account a {
-  margin: 0 2em 0 0.3em;
+  margin: 0 1em 0 0.3em;
 }

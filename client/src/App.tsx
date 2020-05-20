@@ -3,16 +3,17 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
 import { ContextProvider } from './context/Context';
 import Menu from './components/Menu';
 import Wishlist from './pages/Wishlist';
 import Home from './pages/Home';
-import WishlistCompare from './pages/WishlistCompare';
+import Friends from './pages/Friends';
 import './App.css'
+import FriendWishlist from './pages/FriendWishlist';
 
+const App = () => {
 const routes = [
   {
     path: "/",
@@ -24,13 +25,15 @@ const routes = [
     main: () => <Wishlist />
   },
   {
-    path: "/wishlist-compare",
-    main: () => <WishlistCompare />
+    path: "/friends",
+    main: () => <Friends />
   },
+  {
+    path: '/friend/:steamId',
+    main: () => <FriendWishlist />
+  }
 ];
 
-
-const App = () => {
   return (
     <Router>
       <ContextProvider>

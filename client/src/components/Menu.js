@@ -1,8 +1,6 @@
 import React, { useContext, useEffect } from 'react'
-import { Icon, Header, Image } from 'semantic-ui-react';
-import {
-  Link
-} from "react-router-dom";
+import { Image } from 'semantic-ui-react';
+import { Link } from "react-router-dom";
 
 import { fetchSteamUser, fetchGogUser } from './Datas';
 import { Context } from '../context/Context';
@@ -22,40 +20,35 @@ const Menu = () => {
     getGogUserInfos()
   }, [])
 
-  const { steamUsername, steamAvatar, steamProfileUrl } = steamUserInfos;
-  const { gogUsername, gogAvatar, gogProfileUrl } = gogUserInfos;
-
-  console.log(gogUserInfos)
+  const infosAllAccounts = [...steamUserInfos, ...gogUserInfos];
 
   return (
     <div className="menu-sidebar">
       <h2 textAlign='center' className="menu-header">
-        <span>Welcome : </span>
+        <span className='span-account'>Welcome </span>
         <div className='container-user-accounts'>
-          <div className='container-account'>
-            <Image size='mini' circular src={gogAvatar}/>
-            <a href={gogProfileUrl}><span>{`${gogUsername}`}</span></a>
-          </div>
-          <div className='container-account'>
-            <Image size='mini' circular src={steamAvatar}/>
-            <a href={steamProfileUrl}>{`${steamUsername}`}</a>
-          </div>
+          {infosAllAccounts.map(({username, avatar, profileUrl}, index) => (
+            <div key={index} className='container-account'>
+              <Image size='mini' circular src={avatar}/>
+              <a href={profileUrl}><span className='span-account'>{`${username}`}</span></a>
+            </div>
+          ))}
         </div>
       </h2>
-      <ul className='menu-buttons'>
+      <ul className='container-menu-buttons'>
       <li>
         <Link to="/">
-          <span>Home</span>
+          <span className='menu-buttons'>Home</span>
         </Link>
         </li>
         <li>
           <Link to="/wishlist">
-            <span>Liste de souhaits</span>
+            <span className='menu-buttons'>Liste de souhaits</span>
           </Link>
         </li>
         <li>
-          <Link to="/wishlist-compare">
-            <span>Amis</span>
+          <Link to="/friends">
+            <span className='menu-buttons'>Amis</span>
           </Link>
         </li>
       </ul>

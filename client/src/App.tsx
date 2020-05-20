@@ -1,5 +1,4 @@
 import React from 'react'
-import { Menu, Icon } from 'semantic-ui-react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import { ContextProvider } from './context/Context';
+import Menu from './components/Menu';
 import Wishlist from './pages/Wishlist';
 import Home from './pages/Home';
 import WishlistCompare from './pages/WishlistCompare';
@@ -35,25 +35,7 @@ const App = () => {
     <Router>
       <ContextProvider>
         <div className="App">
-          <div className="menu-sidebar">
-            <div className='menu-buttons'>
-              <Link to="/">
-                <Icon className="menu-item" name='home' size='big'
-                />
-              </Link>
-
-            <div>
-              <Link to="/wishlist">
-                <span>Liste de souhaits</span>
-              </Link>
-            </div>
-            <div>
-              <Link to="/wishlist-compare">
-                <span>Amis</span>
-              </Link>
-            </div>
-            </div>
-          </div>
+          <Menu />
 
           <Switch>
             {routes.map((route, index) => (

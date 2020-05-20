@@ -5,24 +5,3 @@
   flex-direction: column;
   justify-content: center;
 }
-
-.menu-sidebar {
-  background-color: black;
-  opacity: 0.6;
-  display: flex;
-  height: 6em;
-  width: 100%;
-  align-items: center;
-  justify-content: flex-end;
-  text-align: center;
-}
-
-.menu-buttons {
-  width: 26%;
-  display: flex;
-  justify-content: space-around;
-}
-
-.menu-item {
-  margin: 2em 0 2em 0;
-}

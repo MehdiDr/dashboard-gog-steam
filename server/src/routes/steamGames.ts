@@ -10,10 +10,11 @@ router.get('/user', async (req: Request, res: Response) => {
       .catch(err => console.log(err))
 
   const formattedData = {
-    username: data.response.players.personaname,
-    profileUrl: data.response.players.profileurl,
-    avatar: data.response.players.avatarmedium,
+    steamUsername: data.response.players[0].personaname,
+    steamProfileUrl: data.response.players[0].profileurl,
+    steamAvatar: data.response.players[0].avatarmedium,
   }
+
   res.send(formattedData);
 });
 

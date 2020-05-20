@@ -40,7 +40,7 @@ const BodyGamesList = ({ allGames }) => {
                   : 'Pas annoncé'
               }
             </Table.Cell>
-            <Table.Cell className={discount && 'table-cell-price-discounted'} style={{color: 'green !important;'}}>{price ? `${price} € ${discount ? `(- ${discount} %)` : ''}` : 'Non Défini'}</Table.Cell>
+            <Table.Cell className={discount && 'table-cell-price-discounted'}>{price ? `${price} € ${discount ? `(- ${discount} %)` : ''}` : 'Non Défini'}</Table.Cell>
             <Table.Cell className='table-cell'>{discount}</Table.Cell>
             <Table.Cell>{reviews}</Table.Cell>
             <Table.Cell>

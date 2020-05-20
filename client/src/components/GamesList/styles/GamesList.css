@@ -36,10 +36,14 @@
   height: 50px;
 }
 
+.capsule {
+  height: 8em;
+}
+
 .table-cell {
   display: none;
 }
 
 .table-cell-price-discounted {
-  color: green;
+  color: #00FF00;
 }

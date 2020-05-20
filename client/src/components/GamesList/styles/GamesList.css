@@ -4,6 +4,9 @@
 .table {
   color: white !important;
   margin-top: 7em !important;
+  width: 80% !important;
+  position: relative !important;
+  left: 10em !important;
 }
 
 .header-cell {
@@ -27,4 +30,16 @@
   cursor: pointer;
   transform: scale(1.1);
   background-color: black !important;
+}
+
+.platform {
+  height: 50px;
+}
+
+.table-cell {
+  display: none;
+}
+
+.table-cell-price-discounted {
+  color: green;
 }

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { Table, Image } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
+import Img from 'react-cool-img';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -27,9 +28,9 @@ const BodyGamesList = ({ allGames }) => {
         setLoading(false)
 
         return (
-          <Table.Row className="table-row" key={index} onClick={() => window.open(linkToShop, '_blank')}>
-            <Table.Cell collapsing width={2}>
-              <Image className="capsule" circular centered size="small" src={logo} />
+          <Table.Row textAlign='center' className="table-row" key={index} onClick={() => window.open(linkToShop, '_blank')}>
+            <Table.Cell collapsing>
+              <Img className="capsule" src={logo} />
             </Table.Cell>
             <Table.Cell>{name}</Table.Cell>
             <Table.Cell>
@@ -39,15 +40,17 @@ const BodyGamesList = ({ allGames }) => {
                   : 'Pas annoncé'
               }
             </Table.Cell>
-            <Table.Cell>{price ? `${price} €` : 'Non Défini'}</Table.Cell>
-            <Table.Cell>{discount ? `${discount} %` : '0 %'}</Table.Cell>
+            <Table.Cell className={discount && 'table-cell-price-discounted'} style={{color: 'green !important;'}}>{price ? `${price} € ${discount ? `(- ${discount} %)` : ''}` : 'Non Défini'}</Table.Cell>
+            <Table.Cell className='table-cell'>{discount}</Table.Cell>
             <Table.Cell>{reviews}</Table.Cell>
             <Table.Cell>
-              <Image
-                size='mini'
+              <Img
+                className='platform'
                 src={platform ==='steam' ?
                   'http://icons.iconarchive.com/icons/papirus-team/papirus-apps/256/steam-icon.png'
-                  : 'https://img.utdstc.com/icons/gog-galaxy.png:225'} />
+                  : 'https://img.utdstc.com/icons/gog-galaxy.png:225'}
+                  alt={platform === 'steam' ? 'steam' : 'gog'}
+                />
             </Table.Cell>
           </Table.Row>
         )

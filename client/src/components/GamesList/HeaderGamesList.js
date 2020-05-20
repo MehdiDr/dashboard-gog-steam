@@ -8,7 +8,7 @@ const HeaderGamesList = ({ allGames }) => {
   const [gamesInfosSorted, setGamesInfosSorted] = useState([]);
   const [column, setColumn] = useState(null);
   const [direction, setDirection] = useState(null);
-  const gamesAttributes = ['name', 'releaseDate', 'price', 'discount', 'reviews', 'platform'];
+  const gamesAttributes = ['name', 'releaseDate', 'price', 'reviews', 'platform'];
 
   const handleSort = clickedColumn => () => {
     if (column !== clickedColumn) {
@@ -27,7 +27,6 @@ const HeaderGamesList = ({ allGames }) => {
         (attribute === 'name' && 'Nom') ||
         (attribute === 'releaseDate' && 'Date de sortie') ||
         (attribute === 'price' && 'Prix') ||
-        (attribute === 'discount' && 'Réduction') ||
         (attribute === 'platform' && 'Plateforme') ||
         (attribute === 'reviews' && 'Avis')
       }
@@ -36,9 +35,9 @@ const HeaderGamesList = ({ allGames }) => {
 
   return (
       <Table.Header>
-        <Table.Row>
-        <Table.HeaderCell />
-        {list}
+        <Table.Row textAlign='center'>
+          <Table.HeaderCell />
+          {list}
         </Table.Row>
       </Table.Header>
 )};

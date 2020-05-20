@@ -3,6 +3,7 @@ import { Header, Icon } from 'semantic-ui-react';
 
 import GamesList from '../components/GamesList/GamesList';
 import FilterButtons from '../components/FilterButtons';
+import {fetchGogWithlist, fetchData} from '../components/Datas';
 import { Context } from '../context/Context';
 import './styles/Wishlist.css';
 
@@ -10,29 +11,11 @@ const Wishlist = () => {
   const {steamGamesList, setSteamGamesList, gamesListGog, setGamesListGog} = useContext(Context);
 
   useEffect(() => {
-    async function fetchGogWithlist() {
-      try {
-        const gogApiResp = await fetch('/api/gog/wishlist');
-        const gogData = await gogApiResp.json();
-
-        return setGamesListGog(gogData);
-      } catch(e) {
-         console.log(e)
-      }
+    async function getAllDatas() {
+      setSteamGamesList(await fetchData())
+      setGamesListGog(await fetchGogWithlist())
     }
-    fetchData()
-    async function fetchData() {
-      try {
-        const steamApiResp = await fetch('/api/steam/wishlist')
-        const steamData = await steamApiResp.json();
-
-        return setSteamGamesList(steamData);
-      } catch(e) {
-        console.log(e)
-      }
-    }
-    fetchData()
-    fetchGogWithlist()
+    getAllDatas()
   }, [])
 
   const allGames= [...steamGamesList, ...gamesListGog]

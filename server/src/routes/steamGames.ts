@@ -4,6 +4,19 @@ import fetch from 'node-fetch';
 // Init shared
 const router = Router();
 
+router.get('/user', async (req: Request, res: Response) => {
+  const data = await fetch('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=5812343ABCE3859FA0797A2860BE0411&steamids=76561197996442713')
+      .then((resp) => resp.json())
+      .catch(err => console.log(err))
+
+  const formattedData = {
+    username: data.response.players.personaname,
+    profileUrl: data.response.players.profileurl,
+    avatar: data.response.players.avatarmedium,
+  }
+  res.send(formattedData);
+});
+
 router.get('/wishlist', async (req: Request, res: Response) => {
   const urls = [
     'https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=0',

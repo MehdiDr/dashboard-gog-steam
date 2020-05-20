@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Menu, Grid } from 'semantic-ui-react'
+import React from 'react'
+import { Menu, Icon } from 'semantic-ui-react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -31,61 +31,40 @@ const routes = [
 
 
 const App = () => {
-  const [activeItem, setActiveItem] = useState('home')
-  //@ts-ignore
-  const handleItemClick = (e: Object, { name }: any) => setActiveItem({ activeItem: name })
   return (
     <Router>
       <ContextProvider>
         <div className="App">
-          <Grid height={100}>
-            <Grid.Row columns={2}>
-              <Grid.Column width={2}>
-                <Menu inverted vertical fixed="left">
-                  <Link to="/">
-                    <Menu.Item
-                      as='div'
-                      className="menu-item"
-                      name='Home'
-                      active={activeItem === 'Home'}
-                      onClick={handleItemClick}
-                    />
-                  </Link>
-                  <Link to="/wishlist">
-                    <Menu.Item
-                      as='div'
-                      className="menu-item"
-                      name='Liste de souhaits'
-                      active={activeItem === 'Liste de souhaits'}
-                      onClick={handleItemClick}
-                    />
-                  </Link>
-                  <Link to="/wishlist-compare">
-                    <Menu.Item
-                      as='div'
-                      className="menu-item"
-                      name='Comparez des wishlist'
-                      active={activeItem === 'wishListCompare'}
-                      onClick={handleItemClick}
-                    />
-                  </Link>
-                </Menu>
-              </Grid.Column>
+          <div className="menu-sidebar">
+            <div className='menu-buttons'>
+              <Link to="/">
+                <Icon className="menu-item" name='home' size='big'
+                />
+              </Link>
 
-              <Grid.Column stretched width={14}>
-                <Switch>
-                  {routes.map((route, index) => (
-                    <Route
-                      key={index}
-                      path={route.path}
-                      exact={route.exact}
-                      children={<route.main />}
-                    />
-                  ))}
-                </Switch>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+            <div>
+              <Link to="/wishlist">
+                <span>Liste de souhaits</span>
+              </Link>
+            </div>
+            <div>
+              <Link to="/wishlist-compare">
+                <span>Amis</span>
+              </Link>
+            </div>
+            </div>
+          </div>
+
+          <Switch>
+            {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                exact={route.exact}
+                children={<route.main />}
+              />
+            ))}
+          </Switch>
         </div>
       </ContextProvider>
     </Router>

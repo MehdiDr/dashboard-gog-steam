@@ -1,6 +1,6 @@
 .scrollTop {
   position: fixed;
-  width: 165%;
+  width: 170%;
   bottom: 1.5em;
   z-index: 1000;
   cursor: pointer;

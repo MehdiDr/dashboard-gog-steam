@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Table } from 'semantic-ui-react';
 import Img from 'react-cool-img';
 import _ from 'lodash';
@@ -10,9 +10,9 @@ import './styles/GamesList.css';
 const BodyGamesList = ({ allGames, gamesInfosSorted }) => {
   const { clickedButton, setLoading } = useContext(Context);
 
-  const steamGamesFilter = allGames.filter(game => game && game.platform === 'steam');
-  const gogGamesFilter = allGames.filter(game => game && game.platform === 'gog');
-  const discountGamesFilter = allGames.filter(game => game && game.discount > 0);
+  const steamGamesFilter = allGames.filter(game => game?.platform === 'steam');
+  const gogGamesFilter = allGames.filter(game => game?.platform === 'gog');
+  const discountGamesFilter = allGames.filter(game => game?.discount > 0);
 
   const allGamesSorted = clickedButton === 1 && (gamesInfosSorted.length > 0 ? gamesInfosSorted : allGames);
   const sortedGamesSteamOrGog = clickedButton === 3 ? steamGamesFilter : gogGamesFilter;
@@ -21,7 +21,7 @@ const BodyGamesList = ({ allGames, gamesInfosSorted }) => {
   return (
     <Table.Body>
     {allGames.length === 0 ? setLoading(true) :
-      (allGamesSorted || sortedGamesSteamOrGog || sortedGamesByDiscount).map((game, index) => {
+      (allGamesSorted || sortedGamesByDiscount || sortedGamesSteamOrGog).map((game, index) => {
         if(!game) return null;
         const { name, logo, releaseDate, linkToShop, price, discount, reviews, platform } = game;
         setLoading(false)

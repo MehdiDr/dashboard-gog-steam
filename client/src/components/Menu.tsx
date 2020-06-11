@@ -6,6 +6,12 @@ import { fetchSteamUser, fetchGogUser } from './Datas';
 import { Context } from '../context/Context';
 import './styles/Menu.css'
 
+interface Profile {
+  username?: string,
+  avatar?: string,
+  profileUrl?: string
+}
+
 const Menu = () => {
   const { steamUserInfos, gogUserInfos, setSteamUserInfos, setGogUserInfos } = useContext(Context);
 
@@ -24,10 +30,10 @@ const Menu = () => {
 
   return (
     <div className="menu-sidebar">
-      <h2 textAlign='center' className="menu-header">
+      <h2 className="menu-header">
         <span className='span-account'>Welcome </span>
         <div className='container-user-accounts'>
-          {infosAllAccounts.map(({username, avatar, profileUrl}, index) => (
+          {infosAllAccounts.map(({ username, avatar, profileUrl }: Profile, index) => (
             <div key={index} className='container-account'>
               <Image size='mini' circular src={avatar}/>
               <a href={profileUrl}><span className='span-account'>{`${username}`}</span></a>

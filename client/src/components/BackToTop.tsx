@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {FaArrowCircleUp} from 'react-icons/fa';
+import React, { useState } from 'react';
+import { FaArrowCircleUp } from 'react-icons/fa';
 import './styles/BackToTop.css';
 
 
@@ -21,7 +21,7 @@ const ScrollArrow = () =>{
   window.addEventListener('scroll', checkScrollTop)
 
   return (
-        <FaArrowCircleUp className="scrollTop" onClick={scrollTop} style={{height: 70, display: showScroll ? 'flex' : 'none'}}/>
+    <FaArrowCircleUp className="scrollTop" onClick={scrollTop} style={{height: 70, display: showScroll ? 'flex' : 'none'}}/>
   );
 }
 

@@ -53,7 +53,7 @@ export async function fetchSteamFriends() {
   }
 }
 
-export async function fetchSteamFriendWishlist(steamId) {
+export async function fetchSteamFriendWishlist(steamId: number) {
   try {
     const steamApiResp = await fetch(`/api/steam/friend/${steamId}`)
     const steamData = await steamApiResp.json();

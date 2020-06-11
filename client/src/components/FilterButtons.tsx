@@ -4,10 +4,15 @@ import { Context } from '../context/Context';
 
 import './styles/Filters.css';
 
+type Game = {
+  discount?: number,
+  platform?: string
+}
+
 const FilterButtons = () => {
   const { setClickButton, gamesListGog, steamGamesList } = useContext(Context);
-  const numberOfPromotionsGog = gamesListGog.filter(game => game && game.discount > 0 && game.platform === 'gog')
-  const numberOfPromotionsSteam = steamGamesList.filter(game => game && game.discount > 0 && game.platform === 'steam')
+  const numberOfPromotionsGog: Array<object> = gamesListGog.filter((game: Game) => game?.discount! > 0 && game.platform === 'gog')
+  const numberOfPromotionsSteam: Array<object> = steamGamesList.filter((game: Game) => game?.discount! > 0 && game?.platform === 'steam')
 
   return (
     <Container className="filter-container">

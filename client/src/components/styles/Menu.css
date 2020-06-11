@@ -10,6 +10,7 @@
 }
 
 .menu-header {
+  text-align: center;
   display: flex;
   position: relative;
   top: 7px;

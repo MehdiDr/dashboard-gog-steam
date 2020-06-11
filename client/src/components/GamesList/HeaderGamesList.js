@@ -21,7 +21,7 @@ const HeaderGamesList = ({ allGames, gamesInfosSorted, setGamesInfosSorted }) =>
   }
 
   const list = useMemo(() => gamesAttributes.map((attribute, index) => (
-    <Table.HeaderCell key={index} className="header-cell" sorted={column === attribute ? direction : null} onClick={handleSort(attribute)}>
+    <Table.HeaderCell key={index}  textAlign='center' className="header-cell" sorted={column === attribute ? direction : null} onClick={handleSort(attribute)}>
       {
         (attribute === 'name' && 'Nom') ||
         (attribute === 'releaseDate' && 'Date de sortie') ||
@@ -30,15 +30,13 @@ const HeaderGamesList = ({ allGames, gamesInfosSorted, setGamesInfosSorted }) =>
         (attribute === 'reviews' && 'Avis')
       }
     </Table.HeaderCell>
-  )), [gamesAttributes])
+  )), [gamesAttributes, column, direction, handleSort])
 
   return (
-      <Table.Header>
-        <Table.Row textAlign='center'>
-          <Table.HeaderCell />
-          {list}
-        </Table.Row>
-      </Table.Header>
+    <Table.Header>
+      <Table.HeaderCell textAlign='center' />
+      {list}
+    </Table.Header>
 )};
 
 export default HeaderGamesList;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import { Header, Icon } from 'semantic-ui-react';
 
 import GamesList from '../components/GamesList/GamesList';
@@ -10,13 +10,14 @@ import './styles/Wishlist.css';
 const Wishlist = () => {
   const { steamGamesList, setSteamGamesList, gamesListGog, setGamesListGog } = useContext(Context);
 
-  useEffect(() => {
-    async function getAllDatas() {
-      setSteamGamesList(await fetchSteamWishlist())
-      setGamesListGog(await fetchGogWithlist())
-    }
-    getAllDatas()
+  const getAllDatas = useCallback(async () => {
+    setSteamGamesList(await fetchSteamWishlist())
+    setGamesListGog(await fetchGogWithlist())
   }, [])
+
+  useEffect(() => {
+    getAllDatas()
+  }, [getAllDatas])
 
   const allGames= [...steamGamesList, ...gamesListGog]
 

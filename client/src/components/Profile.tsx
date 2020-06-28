@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Image } from 'semantic-ui-react';
 
-import { fetchSteamUser, fetchGogUser } from './Datas';
 import { Context } from '../context/Context';
 import './styles/Profile.css'
 
@@ -12,20 +11,9 @@ interface ProfileData {
 }
 
 const Profile = () => {
-  const { steamUserInfos, gogUserInfos, setSteamUserInfos, setGogUserInfos } = useContext(Context);
+  const { steamUserInfos, gogUserInfos } = useContext(Context);
 
-  useEffect(() => {
-    async function getSteamUserInfos() {
-      setSteamUserInfos(await fetchSteamUser())
-    }
-    async function getGogUserInfos() {
-      setGogUserInfos(await fetchGogUser())
-    }
-    getSteamUserInfos()
-    getGogUserInfos()
-  }, [])
-
-  const infosAllAccounts = [...steamUserInfos, ...gogUserInfos];
+  const infosAllAccounts = steamUserInfos && gogUserInfos && [...steamUserInfos, ...gogUserInfos];
 
   return (
     <h2 className="profile-container">

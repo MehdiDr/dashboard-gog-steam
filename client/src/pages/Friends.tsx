@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Header, Button, Icon, Card, Image, Flag, FlagProps } from 'semantic-ui-react';
 import { Link } from "react-router-dom";
 import moment from 'moment';
 import 'moment/locale/fr'
 
-import { fetchSteamFriends } from '../components/Datas';
 import { Context } from '../context/Context';
 import ScrollArrow from '../components/BackToTop';
 import './styles/Friends.css';
+
 
 interface Props {
   country: FlagProps,
@@ -20,17 +20,9 @@ interface Props {
 }
 
 const Friends = () => {
-  const [steamFriendsList, setSteamFriendsList] = useState([]);
-  const { setLoading } = useContext(Context);
+  const { steamFriendsList, setLoading } = useContext(Context);
 
   moment.locale('fr');
-
-  useEffect(() => {
-    async function getAllDatas() {
-      setSteamFriendsList(await fetchSteamFriends())
-    }
-    getAllDatas()
-  }, [])
 
   const postSteamId = (steamId: number) => fetch("/api/steam/friends", {
         method: 'POST',

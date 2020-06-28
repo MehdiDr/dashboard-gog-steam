@@ -20,8 +20,6 @@ const Wishlist = () => {
 
   const allGames = steamFriendGamesList;
 
-
-
   return (
     <>
       <Header className="header" as='h2' icon textAlign='center'>

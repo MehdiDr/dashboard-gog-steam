@@ -46,11 +46,12 @@ router.get('/friends', async (req: Request, res: Response) => {
       const resp = await fetch(encodeURI(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=5812343ABCE3859FA0797A2860BE0411&steamids=${friend.steamid}`))
 
       const data = await resp.json();
-      const { personaname, avatar, lastlogoff, loccountrycode, profileurl, steamid } = data.response.players[0]
+      const { personaname, avatarfull, lastlogoff, loccountrycode, profileurl, steamid, timecreated } = data.response.players[0]
       return {
         username: personaname,
-        avatar,
+        avatar: avatarfull,
         lastLog: lastlogoff,
+        joined: timecreated,
         country: loccountrycode,
         profileUrl: profileurl,
         steamId: steamid

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Button, Label, Container } from 'semantic-ui-react'
+import { Button, Label, Container, Loader } from 'semantic-ui-react'
 import { Context } from '../context/Context';
 
 import './styles/Filters.css';
@@ -16,24 +16,26 @@ const FilterButtons = () => {
 
   return (
     <Container className="filter-container">
-      <Button as='a' onClick={() => setClickButton(1)}>
-        Tous
-      </Button>
+      <Button as='a' onClick={() => setClickButton(1)}>Tous</Button>
       <Button as='div' labelPosition='left' onClick={() => setClickButton(2)}>
         <Label as='a' basic pointing='right'>
-          { gamesListGog.length > 0 ? gamesListGog.length : 'Euh' }
+          { gamesListGog.length === 0 ? <Loader active className='workaround' size='small' inline='centered'/> : gamesListGog.length }
         </Label>
         <Button size='big'>GOG</Button>
       </Button>
       <Button as='div' labelPosition='left'>
         <Label as='a' basic pointing='right'>
-          { steamGamesList.length > 0 ? steamGamesList.length : 'Euh' }
+          { steamGamesList.length === 0 ? <Loader active className='workaround' size='small' inline='centered'/> : steamGamesList.length }
         </Label>
         <Button size='big' onClick={() => setClickButton(3)}>Steam</Button>
       </Button>
       <Button as='div' labelPosition='left'>
         <Label as='a' basic pointing='right'>
-          { steamGamesList.length > 0 ? numberOfPromotionsGog.length + numberOfPromotionsSteam.length : 'Euh' }
+          {
+            steamGamesList.length === 0 ?
+            <Loader active className='workaround' size='small' inline='centered'/> :
+            numberOfPromotionsGog.length + numberOfPromotionsSteam.length
+          }
         </Label>
         <Button size='big' onClick={() => setClickButton(4)}>Réductions</Button>
       </Button>

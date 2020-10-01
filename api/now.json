@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "dashboard-api",
+  "alias": "dashboard-api.now.sh",
+  "env": {
+    "IS_NOW": "true"
+  },
+	"builds": [{ "src": "dist/**", "use": "@now/node" }],
+	"routes": [{ "src": "/(.*)", "dest": "/dist/index.js" }]
+ }

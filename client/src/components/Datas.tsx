@@ -1,6 +1,6 @@
 export async function fetchGogWithlist() {
   try {
-    const gogApiResp = await fetch('/api/gog/wishlist');
+    const gogApiResp = await fetch('https://dashboard-api.vercel.app/api/gog/wishlist');
     const gogData = await gogApiResp.json();
 
     return gogData;
@@ -11,7 +11,7 @@ export async function fetchGogWithlist() {
 
 export async function fetchSteamWishlist() {
   try {
-    const steamApiResp = await fetch('/api/steam/wishlist')
+    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/steam/wishlist')
     const steamData = await steamApiResp.json();
 
     return steamData;
@@ -22,7 +22,7 @@ export async function fetchSteamWishlist() {
 
 export async function fetchSteamUser() {
   try {
-    const steamApiResp = await fetch('/api/steam/user')
+    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/steam/user')
     const steamData = await steamApiResp.json();
 
     return steamData;
@@ -33,7 +33,7 @@ export async function fetchSteamUser() {
 
 export async function fetchGogUser() {
   try {
-    const gogApiResp = await fetch('/api/gog/user')
+    const gogApiResp = await fetch('https://dashboard-api.vercel.app/api/gog/user')
     const gogData = await gogApiResp.json();
 
     return gogData;
@@ -44,7 +44,7 @@ export async function fetchGogUser() {
 
 export async function fetchSteamFriends() {
   try {
-    const steamApiResp = await fetch('/api/steam/friends')
+    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/steam/friends')
     const steamData = await steamApiResp.json();
 
     return steamData;
@@ -55,7 +55,7 @@ export async function fetchSteamFriends() {
 
 export async function fetchSteamFriendWishlist(steamId: number) {
   try {
-    const steamApiResp = await fetch(`/api/steam/friend/${steamId}`)
+    const steamApiResp = await fetch(`https://dashboard-api.vercel.app/api/steam/friend/${steamId}`)
     const steamData = await steamApiResp.json();
 
     return steamData;

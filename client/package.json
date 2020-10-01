@@ -25,7 +25,6 @@
     "semantic-ui-react": "^0.88.2",
     "typescript": "~3.7.2"
   },
-  "proxy": "http://localhost:9000/",
   "scripts": {
     "start": "PORT=4000 react-scripts start",
     "build": "react-scripts build",

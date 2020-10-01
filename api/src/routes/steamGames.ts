@@ -1,6 +1,5 @@
 import { Request, Response, Router } from 'express';
 import fetch from 'node-fetch';
-import { getGamesFromWishlist, pErr } from '@shared/functions';
 
 // Init shared
 const router = Router();
@@ -8,7 +7,7 @@ const router = Router();
 router.get('/user', async (req: Request, res: Response) => {
   const data = await fetch('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=5812343ABCE3859FA0797A2860BE0411&steamids=76561197996442713')
       .then(resp => resp.json())
-      .catch(err => pErr(err));
+      .catch(err => console.log(err));
 
   const { personaname, profileurl, avatarmedium } = data.response.players[0];
 
@@ -30,8 +29,29 @@ router.get('/wishlist', async (req: Request, res: Response) => {
   const data = await Promise.all(
     urls.map(url => fetch(url)
       .then(resp => resp.json())
-      .catch(err => pErr(err))
+      .catch(err => console.log(err))
   ));
+
+  // tslint:disable-next-line: no-shadowed-variable
+  const getGamesFromWishlist = (data: any) => {
+    const getGamesList = data.reduce((acc: any, x: any) => {
+      for (let key in x) acc[key] = x[key];
+      return acc;
+    }, {})
+
+    return Object.values(getGamesList).map(({capsule, name, release_date, subs, review_desc}: any) => {
+      return {
+        name,
+        logo: capsule,
+        linkToShop: capsule && `https://store.steampowered.com/app/${capsule.match(/\d+/g)}/${name}`,
+        releaseDate: release_date,
+        price: subs && subs.length > 0 && (subs[0].price / 100),
+        discount: subs && subs.length > 0 && subs[0].discount_pct,
+        reviews: review_desc,
+        platform: 'steam'
+      }
+    })
+  }
 
   res.send(getGamesFromWishlist(data));
 });
@@ -39,7 +59,7 @@ router.get('/wishlist', async (req: Request, res: Response) => {
 router.get('/friends', async (req: Request, res: Response) => {
   const datas = await fetch('http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=5812343ABCE3859FA0797A2860BE0411&steamid=76561197996442713&relationship=friend')
     .then(resp => resp.json())
-    .catch(err => pErr(err));
+    .catch(err => console.log(err));
 
   const formattedDataFriends = await Promise.all(datas.friendslist.friends.map(async (friend: any) => {
     try {
@@ -57,7 +77,7 @@ router.get('/friends', async (req: Request, res: Response) => {
         steamId: steamid
       }
     } catch(e) {
-      pErr(e)
+      console.log(e)
     }
   }));
 
@@ -74,8 +94,29 @@ router.get('/friend/:steamid', async (req: Request, res: Response) => {
   const data = await Promise.all(
     urls.map(url => fetch(url)
       .then(resp => resp.json())
-      .catch(err => pErr(err))
+      .catch(err => console.log(err))
   ));
+
+  // tslint:disable-next-line: no-shadowed-variable
+  const getGamesFromWishlist = (data: any) => {
+    const getGamesList = data.reduce((acc: any, x: any) => {
+      for (let key in x) acc[key] = x[key];
+      return acc;
+    }, {})
+
+    return Object.values(getGamesList).map(({capsule, name, release_date, subs, review_desc}: any) => {
+      return {
+        name,
+        logo: capsule,
+        linkToShop: capsule && `https://store.steampowered.com/app/${capsule.match(/\d+/g)}/${name}`,
+        releaseDate: release_date,
+        price: subs && subs.length > 0 && (subs[0].price / 100),
+        discount: subs && subs.length > 0 && subs[0].discount_pct,
+        reviews: review_desc,
+        platform: 'steam'
+      }
+    })
+  }
 
   res.send(getGamesFromWishlist(data));
 });
@@ -83,7 +124,7 @@ router.get('/friend/:steamid', async (req: Request, res: Response) => {
 // router.get('/owned-games', async (req: Request, res: Response) => {
 //   const ids = await fetch(encodeURI('http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=5812343ABCE3859FA0797A2860BE0411&steamid=76561197996442713&format=json'))
 //     .then(resp => resp.json())
-//     .catch(err => pErr(err))
+//     .catch(err => console.log(err))
 
 //   const datas = await Promise.all(ids.response.games.map(async ({appid, playtime_forever}: any) => {
 //     try {
@@ -99,7 +140,7 @@ router.get('/friend/:steamid', async (req: Request, res: Response) => {
 //         playedTime: playtime_forever
 //       }
 //     } catch(e) {
-//       pErr(e)
+//       console.log(e)
 //     }
 //   }))
 

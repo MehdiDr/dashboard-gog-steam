@@ -23,3 +23,5 @@ PORT=3006
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.vercel

@@ -19,7 +19,7 @@ const Profile = () => {
     <h2 className="profile-container">
       <span className='span-account'>Welcome </span>
       <div className='container-user-accounts'>
-        {infosAllAccounts.map(({ username, avatar, profileUrl }: ProfileData, index) => (
+        {infosAllAccounts && infosAllAccounts.map(({ username, avatar, profileUrl }: ProfileData, index) => (
           <div key={index} className='container-account'>
             <Image size='mini' circular src={avatar}/>
             <a href={profileUrl}><span className='span-account'>{`${username}`}</span></a>

@@ -12,7 +12,6 @@ import BaseRouter from './routes';
 import logger from '@shared/Logger';
 
 
-// Init express
 const app = express();
 
 /************************************************************************************
@@ -24,7 +23,6 @@ app.use(cors({origin: 'http://localhost:9000'}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
-// Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
@@ -34,7 +32,6 @@ if (process.env.NODE_ENV === 'production') {
     app.use(helmet());
 }
 
-// Add APIs
 app.use('/api', BaseRouter);
 
 // Print API errors

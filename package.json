@@ -1,0 +1,17 @@
+{
+  "name": "dashboardgogsteam",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
+    "build-ts": "lerna run build-ts",
+    "lint": "lerna run lint",
+    "postinstall": "npm run bootstrap && npm run build-ts",
+    "test": "lerna run test",
+    "start": "node api/src/Server.ts"
+  },
+  "devDependencies": {
+    "lerna": "^3.3.0"
+  }
+}

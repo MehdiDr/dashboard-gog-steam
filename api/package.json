@@ -1,6 +1,7 @@
 {
   "name": "server",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "build": "node ./util/build.js",
     "lint": "tslint --project \"tsconfig.json\"",

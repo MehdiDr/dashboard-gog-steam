@@ -1,7 +1,6 @@
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-import path from 'path';
 import helmet from 'helmet';
 import express, { Request, Response, NextFunction } from 'express';
 import { BAD_REQUEST } from 'http-status-codes';
@@ -12,7 +11,6 @@ import BaseRouter from './routes';
 import logger from '@shared/Logger';
 
 
-// Init express
 const app = express();
 
 /************************************************************************************
@@ -24,7 +22,6 @@ app.use(cors({origin: 'http://localhost:9000'}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
-// Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
@@ -34,7 +31,6 @@ if (process.env.NODE_ENV === 'production') {
     app.use(helmet());
 }
 
-// Add APIs
 app.use('/api', BaseRouter);
 
 // Print API errors
@@ -43,17 +39,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     return res.status(BAD_REQUEST).json({
         error: err.message,
     });
-});
-
-
-
-/************************************************************************************
- *                              Serve front-end content
- ***********************************************************************************/
-
-app.use('/', express.static(path.join(__dirname, '../build')));
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
 // Export express instance

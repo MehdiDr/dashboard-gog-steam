@@ -1,0 +1,60 @@
+.menu-sidebar {
+  background-color: black;
+  opacity: 0.6;
+  display: flex;
+  height: 6em;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+}
+
+.menu-header {
+  text-align: center;
+  display: flex;
+  position: relative;
+  top: 7px;
+  height: 1.5em;
+  align-items: center;
+  width: 75%;
+}
+
+.container-menu-buttons {
+  width: 25%;
+  display: flex;
+  justify-content: space-around;
+}
+
+li {
+  display: table-cell;
+  position: relative;
+  padding: 15px 0;
+}
+
+.menu-buttons {
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+
+  display: inline-block;
+  padding: 15px 20px;
+  position: relative;
+}
+
+.menu-buttons:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff !important;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.menu-buttons:hover:after {
+  width: 100%;
+  left: 0;
+}

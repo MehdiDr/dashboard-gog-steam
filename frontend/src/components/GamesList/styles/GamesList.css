@@ -1,0 +1,49 @@
+* {
+  font-size: 1em !important;
+}
+.table {
+  color: white !important;
+  margin-top: 7em !important;
+  width: 80% !important;
+  position: relative !important;
+  left: 10em !important;
+}
+
+.header-cell {
+  color: white !important;
+  margin-top: 7em !important;
+}
+
+.header-cell:hover {
+  background-color: black !important;
+  color: white !important;
+}
+
+.table-row {
+  background-color: #3c4c5d !important;
+  margin-bottom: 1em !important;
+  box-shadow: black !important;
+  transition: all .2s ease-in-out;
+}
+
+.table-row:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  background-color: black !important;
+}
+
+.platform {
+  height: 50px;
+}
+
+.capsule {
+  height: 8em;
+}
+
+.table-cell {
+  display: none;
+}
+
+.table-cell-price-discounted {
+  color: #00FF00;
+}

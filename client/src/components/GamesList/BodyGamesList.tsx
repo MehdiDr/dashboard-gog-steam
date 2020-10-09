@@ -66,7 +66,7 @@ const BodyGamesList = ({ allGames, gamesInfosSorted }: Props) => {
                   className='platform'
                   src={platform ==='steam' ?
                     'http://icons.iconarchive.com/icons/papirus-team/papirus-apps/256/steam-icon.png'
-                    : 'https://img.utdstc.com/icons/gog-galaxy.png:225'}
+                    : 'https://cdn.discordapp.com/attachments/260251901520642048/764216742305333248/hiclipart.com.png'}
                   alt={platform === 'steam' ? 'steam' : 'gog'}
                 />
               </Table.Cell>

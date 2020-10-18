@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import GameLoader from '../components/Loader';
 import { FlagProps } from 'semantic-ui-react';
 
 import { fetchGogWithlist, fetchSteamWishlist, fetchSteamUser, fetchGogUser, fetchSteamFriends } from '../components/Datas';
@@ -30,8 +29,6 @@ export interface ContextProps {
   gamesListGog: object[];
   clickedButton: number;
   setClickButton: (e: number) => void;
-  isLoading: boolean;
-  setLoading: (loading:boolean) => void;
   steamUserInfos: Array<{
     username?: string,
     avatar?: string,
@@ -52,7 +49,6 @@ const ContextProvider = (props:any) => {
   const [steamFriendGamesList, setSteamFriendGamesList] = useState([]);
   const [gamesListGog, setGamesListGog] = useState([]);
   const [clickedButton, setClickButton] = useState(1);
-  const [isLoading, setLoading] = useState(false);
   const [steamUserInfos, setSteamUserInfos] = useState([]);
   const [gogUserInfos, setGogUserInfos] = useState([]);
 
@@ -77,12 +73,9 @@ const ContextProvider = (props:any) => {
       gamesListGog,
       clickedButton,
       setClickButton,
-      isLoading,
-      setLoading,
       steamUserInfos,
       gogUserInfos,
     }}>
-      {isLoading && <GameLoader />}
       {props.children}
     </Context.Provider>
   );

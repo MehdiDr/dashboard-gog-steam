@@ -22,7 +22,7 @@ interface Game {
 }
 
 const BodyGamesList = memo(({ allGames, gamesInfosSorted }: Props) => {
-  const { clickedButton, setLoading } = useContext(Context);
+  const { clickedButton } = useContext(Context);
 
   const steamGamesFilter = allGames.filter((game: Game) => game?.platform! === 'steam');
   const gogGamesFilter = allGames.filter((game: Game) => game?.platform! === 'gog');
@@ -32,37 +32,28 @@ const BodyGamesList = memo(({ allGames, gamesInfosSorted }: Props) => {
   const sortedGamesSteamOrGog = clickedButton === 3 ? steamGamesFilter : gogGamesFilter;
   const sortedGamesByDiscount = clickedButton === 4 && discountGamesFilter;
 
-  // WIP: Use react loadable / suspense to get loading and 404 when error -> https://www.npmjs.com/package/react-window-infinite-loader
-  // Voir aussi https://github.com/bvaughn/react-window/ pour le lazy-load
   return (
     <Table.Body>
-      {allGames.length === 0 ?
-        <> {setLoading(true)} </> :
-        allGames.length === 1 ?
-        <>
-        {setLoading(false)}
-        <p>Ces données sont privées</p>
-        </> :
+      {
         (allGamesSorted || sortedGamesByDiscount || sortedGamesSteamOrGog).map((game, index) => {
           if(!game) return null;
           const { name, logo, releaseDate, linkToShop, price, discount, reviews, platform } = game;
-          setLoading(false)
 
           return (
             <Table.Row textAlign='center' className="table-row" key={index} onClick={() => window.open(linkToShop, '_blank')}>
               <Table.Cell collapsing>
-                <img className="capsule" src={logo} />
+                <img alt={name} className="capsule" src={logo} />
               </Table.Cell>
               <Table.Cell>{name}</Table.Cell>
               <Table.Cell>
                 {
-                  !!releaseDate && (moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString()) !== "01 Jan, 1970" || releaseDate !== null ?
+                  !!releaseDate && (moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString()) !== "01 Jan, 1970" && releaseDate !== null ?
                     moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString()
                     : 'Pas annoncé'
                 }
               </Table.Cell>
               <Table.Cell className={discount ? 'table-cell-price-discounted' : ''}>
-                {price && price !== 83.99 ? `${price} € ${discount ? `(- ${discount} %)` : ''}` : 'Non Défini'}
+                {price && price !== 83.99 && price !== 99.99 ? `${price} € ${discount ? `(- ${discount} %)` : ''}` : 'Non Défini'}
               </Table.Cell>
               <Table.Cell className='table-cell'>{discount}</Table.Cell>
               <Table.Cell>{reviews}</Table.Cell>

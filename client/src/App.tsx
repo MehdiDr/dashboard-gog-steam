@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,12 +6,14 @@ import {
 } from "react-router-dom";
 
 import { ContextProvider } from './context/Context';
-import Menu from './components/Menu';
-import Wishlist from './pages/Wishlist';
-import Home from './pages/Home';
-import Friends from './pages/Friends';
+import GameLoader from './components/Loader';
 import './App.css'
-import FriendWishlist from './pages/FriendWishlist';
+
+const Menu = React.lazy(() => import('./components/Menu'));
+const Wishlist = React.lazy(() => import('./pages/Wishlist'));
+const Home = React.lazy(() => import('./pages/Home'));
+const Friends = React.lazy(() => import('./pages/Friends'));
+const FriendWishlist = React.lazy(() => import('./pages/FriendWishlist'));
 
 const App = () => {
   const routes = [
@@ -36,11 +38,11 @@ const App = () => {
   const pathname = window.location.pathname
 
 return (
-    <Router>
+  <Router>
+    <Suspense fallback={<GameLoader />}>
       <ContextProvider>
         <div className="App">
-        {pathname !== '/' && <Menu />}
-
+          {pathname !== '/' && <Menu />}
           <Switch>
             {routes.map((route, index) => {
               return <Route
@@ -53,7 +55,8 @@ return (
           </Switch>
         </div>
       </ContextProvider>
-    </Router>
+    </Suspense>
+  </Router>
   )
 }
 

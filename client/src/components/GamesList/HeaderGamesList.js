@@ -9,28 +9,29 @@ const HeaderGamesList = ({ allGames, gamesInfosSorted, setGamesInfosSorted }) =>
   const [direction, setDirection] = useState(null);
   const gamesAttributes = ['name', 'releaseDate', 'price', 'reviews', 'platform'];
 
-  const handleSort = clickedColumn => () => {
-    if (column !== clickedColumn) {
-      setDirection('ascending');
-      setColumn(clickedColumn)
-      setGamesInfosSorted(_.sortBy(allGames, [clickedColumn]))
-      return
-    }
-      setGamesInfosSorted(gamesInfosSorted.reverse());
-      setDirection(direction === 'ascending' ? 'descending' : 'ascending');
-  }
-
-  const list = useMemo(() => gamesAttributes.map((attribute, index) => (
-    <Table.HeaderCell key={index}  textAlign='center' className="header-cell" sorted={column === attribute ? direction : null} onClick={handleSort(attribute)}>
-      {
-        (attribute === 'name' && 'Nom') ||
-        (attribute === 'releaseDate' && 'Date de sortie') ||
-        (attribute === 'price' && 'Prix') ||
-        (attribute === 'platform' && 'Plateforme') ||
-        (attribute === 'reviews' && 'Avis')
+  const list = useMemo(() => gamesAttributes.map((attribute, index) => {
+    const handleSort = clickedColumn => () => {
+      if (column !== clickedColumn) {
+        setDirection('ascending');
+        setColumn(clickedColumn)
+        setGamesInfosSorted(_.sortBy(allGames, [clickedColumn]))
+        return
       }
-    </Table.HeaderCell>
-  )), [gamesAttributes, column, direction, handleSort])
+        setGamesInfosSorted(gamesInfosSorted.reverse());
+        setDirection(direction === 'ascending' ? 'descending' : 'ascending');
+    }
+
+    return (
+      <Table.HeaderCell key={index}  textAlign='center' className="header-cell" sorted={column === attribute ? direction : null} onClick={handleSort(attribute)}>
+        {
+          (attribute === 'name' && 'Nom') ||
+          (attribute === 'releaseDate' && 'Date de sortie') ||
+          (attribute === 'price' && 'Prix') ||
+          (attribute === 'platform' && 'Plateforme') ||
+          (attribute === 'reviews' && 'Avis')
+        }
+      </Table.HeaderCell>
+    )}), [gamesAttributes, column, direction, allGames, gamesInfosSorted, setGamesInfosSorted])
 
   return (
     <Table.Header>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, memo } from 'react'
 import { Image } from 'semantic-ui-react';
 
 import { Context } from '../context/Context';
@@ -10,7 +10,7 @@ interface ProfileData {
   profileUrl?: string
 }
 
-const Profile = () => {
+const Profile = memo(() => {
   const { steamUserInfos, gogUserInfos } = useContext(Context);
 
   const infosAllAccounts = steamUserInfos && gogUserInfos && [...steamUserInfos, ...gogUserInfos];
@@ -28,6 +28,6 @@ const Profile = () => {
       </div>
     </h2>
   )
-}
+});
 
 export default Profile

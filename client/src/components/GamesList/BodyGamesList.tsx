@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import { Table } from 'semantic-ui-react';
 import moment from 'moment';
 
@@ -21,7 +21,7 @@ interface Game {
   platform: string,
 }
 
-const BodyGamesList = ({ allGames, gamesInfosSorted }: Props) => {
+const BodyGamesList = memo(({ allGames, gamesInfosSorted }: Props) => {
   const { clickedButton, setLoading } = useContext(Context);
 
   const steamGamesFilter = allGames.filter((game: Game) => game?.platform! === 'steam');
@@ -32,7 +32,8 @@ const BodyGamesList = ({ allGames, gamesInfosSorted }: Props) => {
   const sortedGamesSteamOrGog = clickedButton === 3 ? steamGamesFilter : gogGamesFilter;
   const sortedGamesByDiscount = clickedButton === 4 && discountGamesFilter;
 
-  // WIP: Use react loadable / suspense to get loading and 404 when error
+  // WIP: Use react loadable / suspense to get loading and 404 when error -> https://www.npmjs.com/package/react-window-infinite-loader
+  // Voir aussi https://github.com/bvaughn/react-window/ pour le lazy-load
   return (
     <Table.Body>
       {allGames.length === 0 ?
@@ -78,6 +79,6 @@ const BodyGamesList = ({ allGames, gamesInfosSorted }: Props) => {
           )
       })}
     </Table.Body>
-)};
+)});
 
 export default BodyGamesList;

@@ -14,41 +14,42 @@ import './App.css'
 import FriendWishlist from './pages/FriendWishlist';
 
 const App = () => {
-const routes = [
-  {
-    path: "/",
-    exact: true,
-    main: () => <Home />
-  },
-  {
-    path: "/wishlist",
-    main: () => <Wishlist />
-  },
-  {
-    path: "/friends",
-    main: () => <Friends />
-  },
-  {
-    path: '/friend/:steamId',
-    main: () => <FriendWishlist />
-  }
-];
+  const routes = [
+    {
+      path: "/",
+      exact: true,
+      main: () => <Home />
+    },
+    {
+      path: "/wishlist",
+      main: () => <Wishlist />
+    },
+    {
+      path: "/friends",
+      main: () => <Friends />
+    },
+    {
+      path: '/friend/:steamId',
+      main: () => <FriendWishlist />
+    }
+  ];
+  const pathname = window.location.pathname
 
-  return (
+return (
     <Router>
       <ContextProvider>
         <div className="App">
-          <Menu />
+        {pathname !== '/' && <Menu />}
 
           <Switch>
-            {routes.map((route, index) => (
-              <Route
+            {routes.map((route, index) => {
+              return <Route
                 key={index}
                 path={route.path}
                 exact={route.exact}
                 children={<route.main />}
               />
-            ))}
+            })}
           </Switch>
         </div>
       </ContextProvider>

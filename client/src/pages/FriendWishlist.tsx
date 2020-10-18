@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import { Header, Icon } from 'semantic-ui-react';
 import { useParams } from 'react-router';
 
 import GamesList from '../components/GamesList/GamesList';
@@ -22,10 +21,6 @@ const Wishlist = () => {
 
   return (
     <>
-      <Header className="header" as='h2' icon textAlign='center'>
-        <Icon name='play' circular />
-        <Header.Content>Liste de souhaits</Header.Content>
-      </Header>
       <GamesList allGames={allGames} />
     </>
   )

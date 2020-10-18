@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Header, Button, Icon, Card, Image, Flag, FlagProps } from 'semantic-ui-react';
+import { Button, Card, Image, Flag, FlagProps } from 'semantic-ui-react';
 import { Link } from "react-router-dom";
 import moment from 'moment';
 import 'moment/locale/fr'
@@ -24,7 +24,7 @@ const Friends = () => {
 
   moment.locale('fr');
 
-  const postSteamId = (steamId: number) => fetch("/api/steam/friends", {
+  const postSteamFriendId = (steamId: number) => fetch("/api/steam/friends", {
         method: 'POST',
         body: JSON.stringify({
           "steamId": steamId,
@@ -38,10 +38,6 @@ const Friends = () => {
 
   return (
     <div className='container-friends'>
-      <Header className="header" as='h2' icon textAlign='center'>
-        <Icon name='play' circular />
-        <Header.Content>Liste d'amis</Header.Content>
-      </Header>
       <div className="container-card">
         {steamFriendsList.length === 0 ?
           <>{setLoading(true)}</> :
@@ -49,7 +45,7 @@ const Friends = () => {
             setLoading(false);
             return (
               <Card key={index} className="card">
-                <Image src={avatar} size="medium" wrapped ui={false} />
+                <Image src={avatar} size="small" wrapped ui={false} />
                 <Card.Content>
                   <Card.Header className='card-header'>
                   <a href={profileUrl}>{username}</a>
@@ -62,7 +58,7 @@ const Friends = () => {
                 </Card.Meta>
                 <Card.Description>
                   <Link to={`friend/${steamId}`}>
-                    <Button formAction="" onClick={() => postSteamId(steamId)}>Voir la Liste de souhaits</Button>
+                    <Button formAction="" onClick={() => postSteamFriendId(steamId)}>Voir la Liste de souhaits</Button>
                   </Link>
                 </Card.Description>
                 </Card.Content>

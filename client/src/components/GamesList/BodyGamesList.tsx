@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
 import { Table } from 'semantic-ui-react';
-import Img from 'react-cool-img';
-import _ from 'lodash';
 import moment from 'moment';
 
 import { Context } from '../../context/Context';
@@ -34,10 +32,16 @@ const BodyGamesList = ({ allGames, gamesInfosSorted }: Props) => {
   const sortedGamesSteamOrGog = clickedButton === 3 ? steamGamesFilter : gogGamesFilter;
   const sortedGamesByDiscount = clickedButton === 4 && discountGamesFilter;
 
+  // WIP: Use react loadable / suspense to get loading and 404 when error
   return (
     <Table.Body>
       {allGames.length === 0 ?
         <> {setLoading(true)} </> :
+        allGames.length === 1 ?
+        <>
+        {setLoading(false)}
+        <p>Ces données sont privées</p>
+        </> :
         (allGamesSorted || sortedGamesByDiscount || sortedGamesSteamOrGog).map((game, index) => {
           if(!game) return null;
           const { name, logo, releaseDate, linkToShop, price, discount, reviews, platform } = game;
@@ -46,26 +50,26 @@ const BodyGamesList = ({ allGames, gamesInfosSorted }: Props) => {
           return (
             <Table.Row textAlign='center' className="table-row" key={index} onClick={() => window.open(linkToShop, '_blank')}>
               <Table.Cell collapsing>
-                <Img className="capsule" src={logo} />
+                <img className="capsule" src={logo} />
               </Table.Cell>
               <Table.Cell>{name}</Table.Cell>
               <Table.Cell>
                 {
-                  (moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString()) !== "01 Jan, 1970" ?
+                  !!releaseDate && (moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString()) !== "01 Jan, 1970" || releaseDate !== null ?
                     moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString()
                     : 'Pas annoncé'
                 }
               </Table.Cell>
               <Table.Cell className={discount ? 'table-cell-price-discounted' : ''}>
-                {price ? `${price} € ${discount ? `(- ${discount} %)` : ''}` : 'Non Défini'}
+                {price && price !== 83.99 ? `${price} € ${discount ? `(- ${discount} %)` : ''}` : 'Non Défini'}
               </Table.Cell>
               <Table.Cell className='table-cell'>{discount}</Table.Cell>
               <Table.Cell>{reviews}</Table.Cell>
               <Table.Cell>
-                <Img
+                <img
                   className='platform'
                   src={platform ==='steam' ?
-                    'http://icons.iconarchive.com/icons/papirus-team/papirus-apps/256/steam-icon.png'
+                    'https://icons.iconarchive.com/icons/papirus-team/papirus-apps/256/steam-icon.png'
                     : 'https://cdn.discordapp.com/attachments/260251901520642048/764216742305333248/hiclipart.com.png'}
                   alt={platform === 'steam' ? 'steam' : 'gog'}
                 />

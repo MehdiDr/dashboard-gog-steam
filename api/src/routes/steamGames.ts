@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
 const router = Router();
 
 router.get('/user', async (req: Request, res: Response) => {
-  const data = await fetch('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=5812343ABCE3859FA0797A2860BE0411&steamids=76561197996442713')
+  const data = await fetch('https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=5812343ABCE3859FA0797A2860BE0411&steamids=76561197996442713')
       .then(resp => resp.json())
       .catch(err => console.log(err));
 
@@ -57,13 +57,13 @@ router.get('/wishlist', async (req: Request, res: Response) => {
 });
 
 router.get('/friends', async (req: Request, res: Response) => {
-  const datas = await fetch('http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=5812343ABCE3859FA0797A2860BE0411&steamid=76561197996442713&relationship=friend')
+  const datas = await fetch('https://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=5812343ABCE3859FA0797A2860BE0411&steamid=76561197996442713&relationship=friend')
     .then(resp => resp.json())
     .catch(err => console.log(err));
 
   const formattedDataFriends = await Promise.all(datas.friendslist.friends.map(async (friend: any) => {
     try {
-      const resp = await fetch(encodeURI(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=5812343ABCE3859FA0797A2860BE0411&steamids=${friend.steamid}`))
+      const resp = await fetch(encodeURI(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=5812343ABCE3859FA0797A2860BE0411&steamids=${friend.steamid}`))
 
       const data = await resp.json();
       const { personaname, avatarfull, lastlogoff, loccountrycode, profileurl, steamid, timecreated } = data.response.players[0]

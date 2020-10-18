@@ -63,10 +63,10 @@ router.get('/wishlist', (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, 
         const { title, url, releaseDate, price, rating } = (_b = game === null || game === void 0 ? void 0 : game.data) === null || _b === void 0 ? void 0 : _b.products[0];
         return {
             name: title,
-            logo: `http://${(_c = game === null || game === void 0 ? void 0 : game.images) === null || _c === void 0 ? void 0 : _c.logo2x.slice(2)}`,
+            logo: `https://${(_c = game === null || game === void 0 ? void 0 : game.images) === null || _c === void 0 ? void 0 : _c.logo2x.slice(2)}`,
             linkToShop: `https://gog.com/${url}`,
             releaseDate,
-            price: price.amount,
+            price: parseFloat(price.amount),
             discount: price.discountPercentage,
             reviews: rating,
             platform: 'gog'

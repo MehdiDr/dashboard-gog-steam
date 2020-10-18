@@ -12,6 +12,14 @@ const app = express_1.default();
 app.use(cors_1.default({ origin: 'https://dashboard-client.vercel.app/' }));
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(cookie_parser_1.default());
+app.get('/api/*', (req, res, next) => {
+    res.setHeader('Cache-Control', 'public, max-age=2592000');
+    res.setHeader('Expires', new Date(Date.now() + 2592000000 * 30).toUTCString());
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Content-Security-Policy', "default-src 'self';");
+    next();
+});
 app.use('/api', cors_1.default(), routes_1.default);
 app.get('/', cors_1.default(), (req, res) => {
     res.send('root route');

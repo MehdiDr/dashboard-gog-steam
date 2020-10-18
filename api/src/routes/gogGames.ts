@@ -71,10 +71,10 @@ router.get('/wishlist', async (req: Request, res: Response) => {
 
     return {
       name: title,
-      logo: `http://${game?.images?.logo2x.slice(2)}`,
+      logo: `https://${game?.images?.logo2x.slice(2)}`,
       linkToShop: `https://gog.com/${url}`,
       releaseDate,
-      price: price.amount,
+      price: parseFloat(price.amount),
       discount: price.discountPercentage,
       reviews: rating,
       platform: 'gog'

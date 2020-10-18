@@ -5,7 +5,7 @@ const express_1 = require("express");
 const node_fetch_1 = tslib_1.__importDefault(require("node-fetch"));
 const router = express_1.Router();
 router.get('/user', (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    const data = yield node_fetch_1.default('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=5812343ABCE3859FA0797A2860BE0411&steamids=76561197996442713')
+    const data = yield node_fetch_1.default('https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=5812343ABCE3859FA0797A2860BE0411&steamids=76561197996442713')
         .then(resp => resp.json())
         .catch(err => console.log(err));
     const { personaname, profileurl, avatarmedium } = data.response.players[0];
@@ -46,12 +46,12 @@ router.get('/wishlist', (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, 
     res.send(getGamesFromWishlist(data));
 }));
 router.get('/friends', (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    const datas = yield node_fetch_1.default('http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=5812343ABCE3859FA0797A2860BE0411&steamid=76561197996442713&relationship=friend')
+    const datas = yield node_fetch_1.default('https://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=5812343ABCE3859FA0797A2860BE0411&steamid=76561197996442713&relationship=friend')
         .then(resp => resp.json())
         .catch(err => console.log(err));
     const formattedDataFriends = yield Promise.all(datas.friendslist.friends.map((friend) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
         try {
-            const resp = yield node_fetch_1.default(encodeURI(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=5812343ABCE3859FA0797A2860BE0411&steamids=${friend.steamid}`));
+            const resp = yield node_fetch_1.default(encodeURI(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=5812343ABCE3859FA0797A2860BE0411&steamids=${friend.steamid}`));
             const data = yield resp.json();
             const { personaname, avatarfull, lastlogoff, loccountrycode, profileurl, steamid, timecreated } = data.response.players[0];
             return {

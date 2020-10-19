@@ -11,15 +11,13 @@ interface ProfileData {
 }
 
 const Profile = memo(() => {
-  const { steamUserInfos, gogUserInfos } = useContext(Context);
-
-  const infosAllAccounts = steamUserInfos && gogUserInfos && [...steamUserInfos, ...gogUserInfos];
+  const { userInfos } = useContext(Context);
 
   return (
     <h2 className="profile-container">
       <span className='span-account'>Welcome </span>
       <div className='container-user-accounts'>
-        {infosAllAccounts && infosAllAccounts.map(({ username, avatar, profileUrl }: ProfileData, index) => (
+        {userInfos && userInfos.map(({ username, avatar, profileUrl }: ProfileData, index) => (
           <div key={index} className='container-account'>
             <Image size='mini' circular src={avatar}/>
             <a href={profileUrl}><span className='span-account'>{`${username}`}</span></a>

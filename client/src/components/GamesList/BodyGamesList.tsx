@@ -49,11 +49,11 @@ const BodyGamesList = memo(({ allGames, gamesInfosSorted }: Props) => {
                 {
                   !!releaseDate && (moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString()) !== "01 Jan, 1970" && releaseDate !== null ?
                     moment((new Date(releaseDate * 1000))).format('DD MMM, YYYY').toString()
-                    : 'Pas annoncé'
+                    : '-'
                 }
               </Table.Cell>
               <Table.Cell className={discount ? 'table-cell-price-discounted' : ''}>
-                {price && price !== 83.99 && price !== 99.99 ? `${price} € ${discount ? `(- ${discount} %)` : ''}` : 'Non Défini'}
+                {price && price !== 83.99 && price !== 99.99 ? `${price} € ${discount ? `(- ${discount} %)` : ''}` : '-'}
               </Table.Cell>
               <Table.Cell className='table-cell'>{discount}</Table.Cell>
               <Table.Cell>{reviews}</Table.Cell>

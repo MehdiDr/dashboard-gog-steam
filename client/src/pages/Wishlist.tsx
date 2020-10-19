@@ -6,14 +6,12 @@ import { Context } from '../context/Context';
 import './styles/Wishlist.css';
 
 const Wishlist = () => {
-  const { steamGamesList, gamesListGog } = useContext(Context);
-
-  const allGames= steamGamesList && gamesListGog && [...steamGamesList, ...gamesListGog]
+  const { gamesWishlist } = useContext(Context);
 
   return (
     <>
       <FilterButtons />
-      <GamesList allGames={allGames} />
+      <GamesList allGames={gamesWishlist} />
     </>
   )
 }

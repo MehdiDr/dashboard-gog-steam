@@ -1,42 +1,23 @@
-export async function fetchGogWithlist() {
+export async function fetchWishlist() {
   try {
-    const gogApiResp = await fetch('https://dashboard-api.vercel.app/api/gog/wishlist');
-    const gogData = await gogApiResp.json();
 
-    return gogData;
+    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/games/wishlist')
+    const steamData = await steamApiResp.json();
+
+    return steamData;
   } catch(e) {
      console.log(e)
   }
 }
 
-export async function fetchSteamWishlist() {
+export async function fetchUserInfos() {
   try {
-    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/steam/wishlist')
+    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/users/user')
     const steamData = await steamApiResp.json();
 
-    return steamData;
-  } catch(e) {
-    console.log(e)
-  }
-}
-
-export async function fetchSteamUser() {
-  try {
-    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/steam/user')
-    const steamData = await steamApiResp.json();
+    console.log(steamData)
 
     return steamData;
-  } catch(e) {
-    console.log(e)
-  }
-}
-
-export async function fetchGogUser() {
-  try {
-    const gogApiResp = await fetch('https://dashboard-api.vercel.app/api/gog/user')
-    const gogData = await gogApiResp.json();
-
-    return gogData;
   } catch(e) {
     console.log(e)
   }
@@ -44,7 +25,7 @@ export async function fetchGogUser() {
 
 export async function fetchSteamFriends() {
   try {
-    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/steam/friends')
+    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/users/friends')
     const steamData = await steamApiResp.json();
 
     return steamData;
@@ -55,7 +36,7 @@ export async function fetchSteamFriends() {
 
 export async function fetchSteamFriendWishlist(steamId: number) {
   try {
-    const steamApiResp = await fetch(`https://dashboard-api.vercel.app/api/steam/friend/${steamId}`)
+    const steamApiResp = await fetch(`https://dashboard-api.vercel.app/api/games/friend/${steamId}`)
     const steamData = await steamApiResp.json();
 
     return steamData;

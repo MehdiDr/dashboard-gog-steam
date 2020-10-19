@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { FlagProps } from 'semantic-ui-react';
 
-import { fetchGogWithlist, fetchSteamWishlist, fetchSteamUser, fetchGogUser, fetchSteamFriends } from '../components/Datas';
+import { fetchWishlist, fetchUserInfos, fetchSteamFriends } from '../components/Datas';
 
 
 export interface ContextProps {
-  steamGamesList: Array<{
+  gamesWishlist: Array<{
     name: string,
     logo: string,
     releaseDate: number,
@@ -26,15 +26,9 @@ export interface ContextProps {
   }>;
   steamFriendGamesList: object[];
   setSteamFriendGamesList: (data: any) => void;
-  gamesListGog: object[];
   clickedButton: number;
   setClickButton: (e: number) => void;
-  steamUserInfos: Array<{
-    username?: string,
-    avatar?: string,
-    profileUrl?: string
-  }>;
-  gogUserInfos: Array<{
+  userInfos: Array<{
     username?: string,
     avatar?: string,
     profileUrl?: string
@@ -44,19 +38,15 @@ export interface ContextProps {
 const Context = React.createContext({} as ContextProps);
 
 const ContextProvider = (props:any) => {
-  const [steamGamesList, setSteamGamesList] = useState([]);
   const [steamFriendsList, setSteamFriendsList] = useState([]);
   const [steamFriendGamesList, setSteamFriendGamesList] = useState([]);
-  const [gamesListGog, setGamesListGog] = useState([]);
+  const [gamesWishlist, setGamesWishlist] = useState([]);
   const [clickedButton, setClickButton] = useState(1);
-  const [steamUserInfos, setSteamUserInfos] = useState([]);
-  const [gogUserInfos, setGogUserInfos] = useState([]);
+  const [userInfos, setUserInfos] = useState([]);
 
   const getAllDatas = useCallback(async () => {
-    setSteamGamesList(await fetchSteamWishlist())
-    setGamesListGog(await fetchGogWithlist())
-    setSteamUserInfos(await fetchSteamUser())
-    setGogUserInfos(await fetchGogUser())
+    setGamesWishlist(await fetchWishlist())
+    setUserInfos(await fetchUserInfos())
     setSteamFriendsList(await fetchSteamFriends())
   }, [])
 
@@ -66,15 +56,13 @@ const ContextProvider = (props:any) => {
 
   return (
     <Context.Provider value={{
-      steamGamesList,
+      gamesWishlist,
       steamFriendsList,
       steamFriendGamesList,
       setSteamFriendGamesList,
-      gamesListGog,
       clickedButton,
       setClickButton,
-      steamUserInfos,
-      gogUserInfos,
+      userInfos,
     }}>
       {props.children}
     </Context.Provider>

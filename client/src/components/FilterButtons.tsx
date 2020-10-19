@@ -10,29 +10,31 @@ type Game = {
 }
 
 const FilterButtons = () => {
-  const { setClickButton, gamesListGog, steamGamesList } = useContext(Context);
-  const numberOfPromotionsGog: Array<object> = gamesListGog.filter((game: Game) => game?.discount! > 0 && game.platform === 'gog')
-  const numberOfPromotionsSteam: Array<object> = steamGamesList.filter((game: Game) => game?.discount! > 0 && game?.platform === 'steam')
+  const { setClickButton, gamesWishlist } = useContext(Context);
+  const steamGames = gamesWishlist.filter(game => game?.platform! === 'steam')
+  const gogGames = gamesWishlist.filter(game => game?.platform! === 'gog')
+  const numberOfPromotionsGog: Array<object> = gamesWishlist.filter((game: Game) => game?.discount! > 0 && game.platform === 'gog')
+  const numberOfPromotionsSteam: Array<object> = gamesWishlist.filter((game: Game) => game?.discount! > 0 && game?.platform === 'steam')
 
   return (
     <Container className="filter-container">
       <Button as='a' onClick={() => setClickButton(1)}>Tous</Button>
       <Button as='div' labelPosition='left' onClick={() => setClickButton(2)}>
         <Label as='a' basic pointing='right'>
-          { gamesListGog.length === 0 ? <Loader active className='workaround' size='small' inline='centered'/> : gamesListGog.length }
+          { gogGames.length === 0 ? <Loader active className='workaround' size='small' inline='centered'/> : gogGames.length }
         </Label>
         <Button size='big'>GOG</Button>
       </Button>
       <Button as='div' labelPosition='left'>
         <Label as='a' basic pointing='right'>
-          { steamGamesList.length === 0 ? <Loader active className='workaround' size='small' inline='centered'/> : steamGamesList.length }
+          { steamGames.length === 0 ? <Loader active className='workaround' size='small' inline='centered'/> : steamGames.length }
         </Label>
         <Button size='big' onClick={() => setClickButton(3)}>Steam</Button>
       </Button>
       <Button as='div' labelPosition='left'>
         <Label as='a' basic pointing='right'>
           {
-            steamGamesList.length === 0 ?
+            gamesWishlist.length === 0 ?
             <Loader active className='workaround' size='small' inline='centered'/> :
             numberOfPromotionsGog.length + numberOfPromotionsSteam.length
           }

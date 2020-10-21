@@ -24,7 +24,7 @@ const Friends = () => {
 
   moment.locale('fr');
 
-  const postSteamFriendId = (steamId: number) => fetch("/api/gog/friends", {
+  const postSteamFriendId = (steamId: number) => fetch("/api/users/friends", {
         method: 'POST',
         body: JSON.stringify({
           "steamId": steamId,

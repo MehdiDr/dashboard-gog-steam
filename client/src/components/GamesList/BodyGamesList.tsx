@@ -1,4 +1,5 @@
 import React, { useContext, memo } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Table } from 'semantic-ui-react';
 import moment from 'moment';
 
@@ -42,7 +43,7 @@ const BodyGamesList = memo(({ allGames, gamesInfosSorted }: Props) => {
           return (
             <Table.Row textAlign='center' className="table-row" key={index} onClick={() => window.open(linkToShop, '_blank')}>
               <Table.Cell collapsing>
-                <img alt={name} className="capsule" src={logo} />
+                <LazyLoadImage alt={name} src={logo} threshold={100} className='capsule' effect='blur' />
               </Table.Cell>
               <Table.Cell>{name}</Table.Cell>
               <Table.Cell>

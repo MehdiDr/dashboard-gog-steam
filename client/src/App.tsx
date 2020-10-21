@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, lazy } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,11 +9,11 @@ import { ContextProvider } from './context/Context';
 import GameLoader from './components/Loader';
 import './App.css'
 
-const Menu = React.lazy(() => import('./components/Menu'));
-const Wishlist = React.lazy(() => import('./pages/Wishlist'));
-const Home = React.lazy(() => import('./pages/Home'));
-const Friends = React.lazy(() => import('./pages/Friends'));
-const FriendWishlist = React.lazy(() => import('./pages/FriendWishlist'));
+const Menu = lazy(() => import('./components/Menu'));
+const Wishlist = lazy(() => import('./pages/Wishlist'));
+const Home = lazy(() => import('./pages/Home'));
+const Friends = lazy(() => import('./pages/Friends'));
+const FriendWishlist = lazy(() => import('./pages/FriendWishlist'));
 
 const App = () => {
   const routes = [

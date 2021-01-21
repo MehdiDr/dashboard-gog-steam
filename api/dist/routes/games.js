@@ -4,10 +4,15 @@ const tslib_1 = require("tslib");
 const express_1 = require("express");
 const node_fetch_1 = tslib_1.__importDefault(require("node-fetch"));
 const router = express_1.Router();
-router.get('/wishlist', (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+router.post('/wishlist', (req, res) => {
+    const steamid = req.body.steamId;
+    res.redirect(303, `/api/games/wishlist/${steamid}`);
+});
+router.get('/wishlist/:steamid', (req, res) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    const { steamid } = req.params;
     const urls = [
-        'https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=0',
-        'https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=1'
+        `https://store.steampowered.com/wishlist/profiles/${steamid}/wishlistdata/?p=0`,
+        `https://store.steampowered.com/wishlist/profiles/${steamid}/wishlistdata/?p=1`
     ];
     const data = yield Promise.all(urls.map(url => node_fetch_1.default(url)
         .then(resp => resp.json())

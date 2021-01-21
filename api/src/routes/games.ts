@@ -1,13 +1,20 @@
 import { Request, Response, Router } from 'express';
+import bodyParser from 'body-parser';
 import fetch from 'node-fetch';
 
 // Init shared
 const router = Router();
 
-router.get('/wishlist', async (req: Request, res: Response) => {
+router.post('/wishlist', (req: Request, res: Response) => {
+  const steamid = req.body.steamId;
+  res.redirect(303, `/api/games/wishlist/${steamid}`);
+});
+
+router.get('/wishlist/:steamid', async (req: Request, res: Response) => {
+  const { steamid } = req.params;
   const urls = [
-    'https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=0',
-    'https://store.steampowered.com/wishlist/profiles/76561197996442713/wishlistdata/?p=1'
+    `https://store.steampowered.com/wishlist/profiles/${steamid}/wishlistdata/?p=0`,
+    `https://store.steampowered.com/wishlist/profiles/${steamid}/wishlistdata/?p=1`
   ];
 
   const data = await Promise.all(

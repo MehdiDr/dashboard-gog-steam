@@ -9,8 +9,10 @@ require("express-async-errors");
 const cors_1 = tslib_1.__importDefault(require("cors"));
 const routes_1 = tslib_1.__importDefault(require("./routes"));
 const app = express_1.default();
-app.use(cors_1.default({ origin: 'https://dashboard-client.vercel.app/' }));
-app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.use(body_parser_1.default.urlencoded({
+    extended: true
+}));
+app.use(body_parser_1.default.json());
 app.use(cookie_parser_1.default());
 app.get('/api/*', (req, res, next) => {
     res.setHeader('Cache-Control', 'public, max-age=2592000');

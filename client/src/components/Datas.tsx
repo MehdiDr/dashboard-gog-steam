@@ -1,7 +1,7 @@
-export async function fetchWishlist() {
+export async function fetchWishlist(steamId: string) {
   try {
 
-    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/games/wishlist')
+    const steamApiResp = await fetch(`http://localhost:9000/api/games/wishlist/${steamId}`)
     const steamData = await steamApiResp.json();
 
     return steamData;
@@ -12,10 +12,8 @@ export async function fetchWishlist() {
 
 export async function fetchUserInfos() {
   try {
-    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/users/user')
+    const steamApiResp = await fetch('http://localhost:9000/api/users/user')
     const steamData = await steamApiResp.json();
-
-    console.log(steamData)
 
     return steamData;
   } catch(e) {
@@ -25,7 +23,7 @@ export async function fetchUserInfos() {
 
 export async function fetchSteamFriends() {
   try {
-    const steamApiResp = await fetch('https://dashboard-api.vercel.app/api/users/friends')
+    const steamApiResp = await fetch('http://localhost:9000/api/users/friends')
     const steamData = await steamApiResp.json();
 
     return steamData;
@@ -36,7 +34,7 @@ export async function fetchSteamFriends() {
 
 export async function fetchSteamFriendWishlist(steamId: number) {
   try {
-    const steamApiResp = await fetch(`https://dashboard-api.vercel.app/api/games/friend/${steamId}`)
+    const steamApiResp = await fetch(`http://localhost:9000/api/games/friend/${steamId}`)
     const steamData = await steamApiResp.json();
 
     return steamData;

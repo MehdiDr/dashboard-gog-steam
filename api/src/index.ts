@@ -8,8 +8,11 @@ import cors from 'cors';
 import BaseRouter from './routes';
 
 const app: express.Application = express();
-app.use(cors({origin: 'https://dashboard-client.vercel.app/'}));
-app.use(bodyParser.urlencoded({extended: true}));
+// app.use(cors({origin: 'https://dashboard-client.vercel.app/'}));
+app.use(bodyParser.urlencoded({
+extended: true
+}));
+app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.get('/api/*', (req, res, next) => {
